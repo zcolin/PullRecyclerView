@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.zcolin.gui.zrecyclerview.BaseRecyclerAdapter;
 import com.zcolin.gui.zrecyclerview.ZRecyclerView;
+import com.zcolin.gui.zrecyclerview.hfooter.google.DefGoogleHeader;
 import com.zcolin.gui.zrecyclerview.progressindicator.ProgressStyle;
 
 import java.util.ArrayList;
@@ -44,16 +45,17 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
         recyclerView.setLoadMoreProgressStyle(ProgressStyle.BallPulse);
 
-        recyclerView.setIsShowNoMore(false);//不显示已加载全部
-        //recyclerView.setIsLoadMoreEnabled(false);//到底加载是否可用
-        //recyclerView.setIsRefreshEnabled(false);//下拉刷新是否可用
+        //recyclerView.setIsShowNoMore(false);//不显示已加载全部
+        // recyclerView.setIsLoadMoreEnabled(false);//到底加载是否可用
+        // recyclerView.setIsRefreshEnabled(false);//下拉刷新是否可用
         recyclerView.setRefreshHeaderText("下拉刷新", "释放立即刷新", "正在刷新", "刷新完成");
+        recyclerView.setRefreshHeader(new DefGoogleHeader(this));
 
         notifyData(new ArrayList<String>(), false);
 
         recyclerView.refreshWithPull();
-        //recyclerView.refresh();//没有下拉刷新效果，直接刷新数据
-        //recyclerView.setRefreshing(true);只有下拉刷新效果，不刷新数据
+        // recyclerView.refresh();//没有下拉刷新效果，直接刷新数据
+        // recyclerView.setRefreshing(true);只有下拉刷新效果，不刷新数据
     }
 
     /**
