@@ -1,18 +1,25 @@
-package com.zcolin.gui.zrecyclerview.progressindicator.indicator;
+/*
+ * *********************************************************
+ *   author   colin
+ *   company  fosung
+ *   email    wanglin2046@126.com
+ *   date     16-12-15 下午4:59
+ * ********************************************************
+ */
 
-import android.animation.Animator;
+package com.zcolin.gui.zrecyclerview.progressindicator.indicators;
+
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.animation.LinearInterpolator;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jack on 2015/10/19.
  */
-public class BallScaleMultipleIndicator extends BaseIndicatorController {
+public class BallScaleMultipleIndicator extends Indicator {
 
     float[] scaleFloats=new float[]{1,1,1};
     int[] alphaInts=new int[]{255,255,255};
@@ -28,16 +35,16 @@ public class BallScaleMultipleIndicator extends BaseIndicatorController {
     }
 
     @Override
-    public List<Animator> createAnimation() {
-        List<Animator> animators=new ArrayList<>();
+    public ArrayList<ValueAnimator> onCreateAnimators() {
+        ArrayList<ValueAnimator> animators=new ArrayList<>();
         long[] delays=new long[]{0, 200, 400};
         for (int i = 0; i < 3; i++) {
             final int index=i;
-            ValueAnimator scaleAnim= ValueAnimator.ofFloat(0,1);
+            ValueAnimator scaleAnim=ValueAnimator.ofFloat(0,1);
             scaleAnim.setInterpolator(new LinearInterpolator());
             scaleAnim.setDuration(1000);
             scaleAnim.setRepeatCount(-1);
-            scaleAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            addUpdateListener(scaleAnim,new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     scaleFloats[index] = (float) animation.getAnimatedValue();
@@ -45,13 +52,12 @@ public class BallScaleMultipleIndicator extends BaseIndicatorController {
                 }
             });
             scaleAnim.setStartDelay(delays[i]);
-            scaleAnim.start();
 
-            ValueAnimator alphaAnim= ValueAnimator.ofInt(255,0);
+            ValueAnimator alphaAnim=ValueAnimator.ofInt(255,0);
             alphaAnim.setInterpolator(new LinearInterpolator());
             alphaAnim.setDuration(1000);
             alphaAnim.setRepeatCount(-1);
-            alphaAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            addUpdateListener(alphaAnim,new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     alphaInts[index] = (int) animation.getAnimatedValue();
@@ -59,7 +65,6 @@ public class BallScaleMultipleIndicator extends BaseIndicatorController {
                 }
             });
             scaleAnim.setStartDelay(delays[i]);
-            alphaAnim.start();
 
             animators.add(scaleAnim);
             animators.add(alphaAnim);

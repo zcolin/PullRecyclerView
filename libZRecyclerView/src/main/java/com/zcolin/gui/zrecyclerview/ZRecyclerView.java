@@ -32,24 +32,24 @@ import com.zcolin.gui.zrecyclerview.hfooter.IRefreshHeader;
 
 /**
  * 下拉刷新_到底加载 组件
- * <p>
+ * <p/>
  * 可以传入{@link android.support.v7.widget.RecyclerView.Adapter}及其子类，使用装饰者模式将用户传入的apapter进行包装，
  * 所以用户的adapter可以保持原有样式的操作
  */
 public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
-    private static final float DRAG_RATE = 2;//下拉刷新滑动阻力系数，越大需要手指下拉的距离越大才能刷新
-
     private WrapperRecyclerAdapter             mWrapAdapter;
     private ZRecyclerView.PullLoadMoreListener mLoadingListener;
     private RelativeLayout                     mEmptyViewContainer;
+    private View                               headerView;
 
-    private View            headerView;
     private View            footerView;
     private IRefreshHeader  refreshHeader;
     private ILoadMoreFooter loadMoreFooter;
     private boolean isShowNoMore      = true;   //是否显示 加载全部
     private boolean isRefreshEnabled  = true;    //设置下拉刷新是否可用
     private boolean isLoadMoreEnabled = true;    //设置到底加载是否可用
+    private float   dragRate          = 2;//下拉刷新滑动阻力系数，越大需要手指下拉的距离越大才能刷新
+    private BaseRecyclerAdapter.OnItemClickListener itemClickListener;
 
     private boolean isNoMore      = false;   //是否已没有更多
     private boolean isLoadingData = false;   //是否正在加载数据
@@ -90,6 +90,17 @@ public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
      */
     public void setOnPullLoadMoreListener(PullLoadMoreListener listener) {
         mLoadingListener = listener;
+    }
+
+    public <T> void setOnItemClickListener(BaseRecyclerAdapter.OnItemClickListener<T> li) {
+        itemClickListener = li;
+        if (mWrapAdapter != null) {
+            if (mWrapAdapter.getAdapter() instanceof BaseRecyclerAdapter) {
+                ((BaseRecyclerAdapter) mWrapAdapter.getAdapter()).setOnItemClickListener(li);
+            } else {
+                throw new IllegalArgumentException("adapter 必须继承BaseRecyclerAdapter 才能使用setOnItemClickListener");
+            }
+        }
     }
 
     /**
@@ -205,9 +216,17 @@ public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
     }
 
     /**
+     * 下拉刷新滑动阻力系数，越大需要手指下拉的距离越大才能刷新
+     */
+    public ZRecyclerView setDragRate(int dragRate) {
+        this.dragRate = dragRate;
+        return this;
+    }
+
+    /**
      * 设置下拉刷新的进度条风格
      */
-    public ZRecyclerView setRefreshProgressStyle(int style) {
+    public ZRecyclerView setRefreshProgressStyle(String style) {
         if (refreshHeader != null && refreshHeader instanceof DefRefreshHeader) {
             ((DefRefreshHeader) refreshHeader).setProgressStyle(style);
         }
@@ -217,7 +236,7 @@ public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
     /**
      * 设置加载更多的进度条风格
      */
-    public ZRecyclerView setLoadMoreProgressStyle(int style) {
+    public ZRecyclerView setLoadMoreProgressStyle(String style) {
         if (loadMoreFooter != null && loadMoreFooter instanceof DefLoadMoreFooter) {
             ((DefLoadMoreFooter) loadMoreFooter).setProgressStyle(style);
         }
@@ -255,7 +274,7 @@ public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
 
     /**
      * 设置没有数据的EmptyView
-     * <p>
+     * <p/>
      * <p>注意：如果调用此函数，会将RecyclerView从原来的布局中移除添加到一个RelativeLayout中，然后将RelativeLayout放置到原来的布局中，
      * 也就是说，在RecyclerView和其父布局中间添加了一层RelitiveLayout，用来盛放RecyclerView和emptyView<p/>
      */
@@ -384,6 +403,7 @@ public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
                     .setIsLoadMoreEnabled(isLoadMoreEnabled);
         super.setAdapter(mWrapAdapter);
 
+        setOnItemClickListener(itemClickListener);
         if (!hasRegisterEmptyObserver) {
             mWrapAdapter.registerAdapterDataObserver(mEmptyDataObserver);
             hasRegisterEmptyObserver = true;
@@ -443,7 +463,7 @@ public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
                 final float deltaY = ev.getRawY() - mLastY;
                 mLastY = ev.getRawY();
                 if (isOnTop() && isRefreshEnabled && appbarState == AppBarStateChangeListener.State.EXPANDED) {
-                    refreshHeader.onMove(deltaY / DRAG_RATE);
+                    refreshHeader.onMove(deltaY / dragRate);
                     if (refreshHeader.getVisibleHeight() > 0 && !isRefreshing) {
                         return false;
                     }

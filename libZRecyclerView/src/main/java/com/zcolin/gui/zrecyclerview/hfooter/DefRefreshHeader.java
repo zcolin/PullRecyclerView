@@ -26,13 +26,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.zcolin.gui.R;
-import com.zcolin.gui.zrecyclerview.ZRecyclerView;
+import com.zcolin.gui.zrecyclerview.ZScrollView;
 import com.zcolin.gui.zrecyclerview.progressindicator.AVLoadingIndicatorView;
 import com.zcolin.gui.zrecyclerview.progressindicator.ProgressStyle;
 import com.zcolin.gui.zrecyclerview.progressindicator.SimpleViewSwitcher;
 
 /**
- * 默认的下拉更多HeaderView，如需要简单的变换，可以直接在{@link ZRecyclerView}中设置
+ * 默认的下拉更多HeaderView，如需要简单的变换，可以直接在{@link ZScrollView}中设置
  * 复杂的需要继承此类重写或者实现{@link IRefreshHeader} 接口
  */
 public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
@@ -89,7 +89,7 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
         mStatusTextView = (TextView) findViewById(R.id.refresh_status_textview);
 
         mProgressBar = (SimpleViewSwitcher) findViewById(R.id.listview_header_progressbar);
-        setProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        setProgressStyle(ProgressStyle.BallSpinFadeLoaderIndicator);
 
         mRotateUpAnim = new RotateAnimation(0.0f, -180.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -111,13 +111,13 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
      *
      * @param style {@link ProgressStyle}
      */
-    public void setProgressStyle(int style) {
+    public void setProgressStyle(String style) {
         if (style == ProgressStyle.SysProgress) {
             mProgressBar.setView(new ProgressBar(getContext(), null, android.R.attr.progressBarStyle));
         } else {
             AVLoadingIndicatorView progressView = new AVLoadingIndicatorView(this.getContext());
             progressView.setIndicatorColor(0xffB5B5B5);
-            progressView.setIndicatorId(style);
+            progressView.setIndicator(style);
             mProgressBar.setView(progressView);
         }
     }

@@ -5,324 +5,250 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.IntDef;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 
 import com.zcolin.gui.R;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallBeatIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallClipRotateIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallClipRotateMultipleIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallClipRotatePulseIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallGridBeatIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallGridPulseIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallPulseIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallPulseRiseIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallPulseSyncIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallRotateIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallScaleIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallScaleMultipleIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallScaleRippleIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallScaleRippleMultipleIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallSpinFadeLoaderIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallTrianglePathIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallZigZagDeflectIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BallZigZagIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.BaseIndicatorController;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.CubeTransitionIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.LineScaleIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.LineScalePartyIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.LineScalePulseOutIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.LineScalePulseOutRapidIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.LineSpinFadeLoaderIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.PacmanIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.SemiCircleSpinIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.SquareSpinIndicator;
-import com.zcolin.gui.zrecyclerview.progressindicator.indicator.TriangleSkewSpinIndicator;
+import com.zcolin.gui.zrecyclerview.progressindicator.indicators.BallPulseIndicator;
+import com.zcolin.gui.zrecyclerview.progressindicator.indicators.Indicator;
 
-
-/**
- * Created by Jack on 2015/10/19.
- .BallPulse,
- .BallGridPulse,
- .BallClipRotate,
- .BallClipRotatePulse,
- .SquareSpin,
- .BallClipRotateMultiple,
- .BallPulseRise,
- .BallRotate,
- .CubeTransition,
- .BallZigZag,
- .BallZigZagDeflect,
- .BallTrianglePath,
- .BallScale,
- .LineScale,
- .LineScaleParty,
- .BallScaleMultiple,
- .BallPulseSync,
- .BallBeat,
- .LineScalePulseOut,
- .LineScalePulseOutRapid,
- .BallScaleRipple,
- .BallScaleRippleMultiple,
- .BallSpinFadeLoader,
- .LineSpinFadeLoader,
- .TriangleSkewSpin,
- .Pacman,
- .BallGridBeat,
- .SemiCircleSpin
- *
- */
 public class AVLoadingIndicatorView extends View {
-    //indicators
-    public static final int BallPulse=0;
-    public static final int BallGridPulse=1;
-    public static final int BallClipRotate=2;
-    public static final int BallClipRotatePulse=3;
-    public static final int SquareSpin=4;
-    public static final int BallClipRotateMultiple=5;
-    public static final int BallPulseRise=6;
-    public static final int BallRotate=7;
-    public static final int CubeTransition=8;
-    public static final int BallZigZag=9;
-    public static final int BallZigZagDeflect=10;
-    public static final int BallTrianglePath=11;
-    public static final int BallScale=12;
-    public static final int LineScale=13;
-    public static final int LineScaleParty=14;
-    public static final int BallScaleMultiple=15;
-    public static final int BallPulseSync=16;
-    public static final int BallBeat=17;
-    public static final int LineScalePulseOut=18;
-    public static final int LineScalePulseOutRapid=19;
-    public static final int BallScaleRipple=20;
-    public static final int BallScaleRippleMultiple=21;
-    public static final int BallSpinFadeLoader=22;
-    public static final int LineSpinFadeLoader=23;
-    public static final int TriangleSkewSpin=24;
-    public static final int Pacman=25;
-    public static final int BallGridBeat=26;
-    public static final int SemiCircleSpin=27;
 
+    private static final String TAG = "AVLoadingIndicatorView";
 
-    @IntDef(flag = true,
-            value = {
-                    BallPulse,
-                    BallGridPulse,
-                    BallClipRotate,
-                    BallClipRotatePulse,
-                    SquareSpin,
-                    BallClipRotateMultiple,
-                    BallPulseRise,
-                    BallRotate,
-                    CubeTransition,
-                    BallZigZag,
-                    BallZigZagDeflect,
-                    BallTrianglePath,
-                    BallScale,
-                    LineScale,
-                    LineScaleParty,
-                    BallScaleMultiple,
-                    BallPulseSync,
-                    BallBeat,
-                    LineScalePulseOut,
-                    LineScalePulseOutRapid,
-                    BallScaleRipple,
-                    BallScaleRippleMultiple,
-                    BallSpinFadeLoader,
-                    LineSpinFadeLoader,
-                    TriangleSkewSpin,
-                    Pacman,
-                    BallGridBeat,
-                    SemiCircleSpin
-            })
-    public @interface Indicator{}
+    private static final BallPulseIndicator DEFAULT_INDICATOR = new BallPulseIndicator();
 
-    //Sizes (with defaults in DP)
-    public static final int DEFAULT_SIZE=30;
+    private static final int MIN_SHOW_TIME = 500; // ms
+    private static final int MIN_DELAY     = 500; // ms
 
-    //attrs
-    int mIndicatorId;
-    int mIndicatorColor;
+    private long mStartTime = -1;
 
-    Paint mPaint;
+    private boolean mPostedHide = false;
 
-    BaseIndicatorController mIndicatorController;
+    private boolean mPostedShow = false;
 
-    private boolean mHasAnimation;
+    private boolean mDismissed = false;
 
+    private final Runnable mDelayedHide = new Runnable() {
+
+        @Override
+        public void run() {
+            mPostedHide = false;
+            mStartTime = -1;
+            setVisibility(View.GONE);
+        }
+    };
+
+    private final Runnable mDelayedShow = new Runnable() {
+
+        @Override
+        public void run() {
+            mPostedShow = false;
+            if (!mDismissed) {
+                mStartTime = System.currentTimeMillis();
+                setVisibility(View.VISIBLE);
+            }
+        }
+    };
+
+    int mMinWidth;
+    int mMaxWidth;
+    int mMinHeight;
+    int mMaxHeight;
+
+    private Indicator mIndicator;
+    private int       mIndicatorColor;
+
+    private boolean mShouldStartAnimationDrawable;
 
     public AVLoadingIndicatorView(Context context) {
         super(context);
-        init(null, 0);
+        init(context, null, 0, R.style.AVLoadingIndicatorView);
     }
 
     public AVLoadingIndicatorView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(attrs, 0);
+        init(context, attrs, 0, R.style.AVLoadingIndicatorView);
     }
 
     public AVLoadingIndicatorView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr, R.style.AVLoadingIndicatorView);
     }
-
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public AVLoadingIndicatorView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr, R.style.AVLoadingIndicatorView);
     }
 
-    private void init(AttributeSet attrs, int defStyle) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AVLoadingIndicatorView);
-        mIndicatorId=a.getInt(R.styleable.AVLoadingIndicatorView_indicator, BallPulse);
-        mIndicatorColor=a.getColor(R.styleable.AVLoadingIndicatorView_indicator_color, Color.WHITE);
+    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        mMinWidth = 24;
+        mMaxWidth = 48;
+        mMinHeight = 24;
+        mMaxHeight = 48;
+
+        final TypedArray a = context.obtainStyledAttributes(
+                attrs, R.styleable.AVLoadingIndicatorView, defStyleAttr, defStyleRes);
+
+        mMinWidth = a.getDimensionPixelSize(R.styleable.AVLoadingIndicatorView_minWidth, mMinWidth);
+        mMaxWidth = a.getDimensionPixelSize(R.styleable.AVLoadingIndicatorView_maxWidth, mMaxWidth);
+        mMinHeight = a.getDimensionPixelSize(R.styleable.AVLoadingIndicatorView_minHeight, mMinHeight);
+        mMaxHeight = a.getDimensionPixelSize(R.styleable.AVLoadingIndicatorView_maxHeight, mMaxHeight);
+        String indicatorName = a.getString(R.styleable.AVLoadingIndicatorView_indicatorName);
+        mIndicatorColor = a.getColor(R.styleable.AVLoadingIndicatorView_indicatorColor, Color.WHITE);
+        setIndicator(indicatorName);
+        if (mIndicator == null) {
+            setIndicator(DEFAULT_INDICATOR);
+        }
         a.recycle();
-        mPaint=new Paint();
-        mPaint.setColor(mIndicatorColor);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setAntiAlias(true);
-        applyIndicator();
     }
 
-    public void setIndicatorId(int  indicatorId){
-        mIndicatorId = indicatorId;
-        applyIndicator();
+    public Indicator getIndicator() {
+        return mIndicator;
     }
 
-    public void setIndicatorColor(int color){
-        mIndicatorColor = color;
-        mPaint.setColor(mIndicatorColor);
-        this.invalidate();
-    }
+    public void setIndicator(Indicator d) {
+        if (mIndicator != d) {
+            if (mIndicator != null) {
+                mIndicator.setCallback(null);
+                unscheduleDrawable(mIndicator);
+            }
 
-    private void applyIndicator(){
-        switch (mIndicatorId){
-            case BallPulse:
-                mIndicatorController=new BallPulseIndicator();
-                break;
-            case BallGridPulse:
-                mIndicatorController=new BallGridPulseIndicator();
-                break;
-            case BallClipRotate:
-                mIndicatorController=new BallClipRotateIndicator();
-                break;
-            case BallClipRotatePulse:
-                mIndicatorController=new BallClipRotatePulseIndicator();
-                break;
-            case SquareSpin:
-                mIndicatorController=new SquareSpinIndicator();
-                break;
-            case BallClipRotateMultiple:
-                mIndicatorController=new BallClipRotateMultipleIndicator();
-                break;
-            case BallPulseRise:
-                mIndicatorController=new BallPulseRiseIndicator();
-                break;
-            case BallRotate:
-                mIndicatorController=new BallRotateIndicator();
-                break;
-            case CubeTransition:
-                mIndicatorController=new CubeTransitionIndicator();
-                break;
-            case BallZigZag:
-                mIndicatorController=new BallZigZagIndicator();
-                break;
-            case BallZigZagDeflect:
-                mIndicatorController=new BallZigZagDeflectIndicator();
-                break;
-            case BallTrianglePath:
-                mIndicatorController=new BallTrianglePathIndicator();
-                break;
-            case BallScale:
-                mIndicatorController=new BallScaleIndicator();
-                break;
-            case LineScale:
-                mIndicatorController=new LineScaleIndicator();
-                break;
-            case LineScaleParty:
-                mIndicatorController=new LineScalePartyIndicator();
-                break;
-            case BallScaleMultiple:
-                mIndicatorController=new BallScaleMultipleIndicator();
-                break;
-            case BallPulseSync:
-                mIndicatorController=new BallPulseSyncIndicator();
-                break;
-            case BallBeat:
-                mIndicatorController=new BallBeatIndicator();
-                break;
-            case LineScalePulseOut:
-                mIndicatorController=new LineScalePulseOutIndicator();
-                break;
-            case LineScalePulseOutRapid:
-                mIndicatorController=new LineScalePulseOutRapidIndicator();
-                break;
-            case BallScaleRipple:
-                mIndicatorController=new BallScaleRippleIndicator();
-                break;
-            case BallScaleRippleMultiple:
-                mIndicatorController=new BallScaleRippleMultipleIndicator();
-                break;
-            case BallSpinFadeLoader:
-                mIndicatorController=new BallSpinFadeLoaderIndicator();
-                break;
-            case LineSpinFadeLoader:
-                mIndicatorController=new LineSpinFadeLoaderIndicator();
-                break;
-            case TriangleSkewSpin:
-                mIndicatorController=new TriangleSkewSpinIndicator();
-                break;
-            case Pacman:
-                mIndicatorController=new PacmanIndicator();
-                break;
-            case BallGridBeat:
-                mIndicatorController=new BallGridBeatIndicator();
-                break;
-            case SemiCircleSpin:
-                mIndicatorController=new SemiCircleSpinIndicator();
-                break;
+            mIndicator = d;
+            //need to set indicator color again if you didn't specified when you update the indicator .
+            setIndicatorColor(mIndicatorColor);
+            if (d != null) {
+                d.setCallback(this);
+            }
+            postInvalidate();
         }
-        mIndicatorController.setTarget(this);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int width  = measureDimension(dp2px(DEFAULT_SIZE), widthMeasureSpec);
-        int height = measureDimension(dp2px(DEFAULT_SIZE), heightMeasureSpec);
-        setMeasuredDimension(width, height);
+
+    /**
+     * setIndicatorColor(0xFF00FF00)
+     * or
+     * setIndicatorColor(Color.BLUE)
+     * or
+     * setIndicatorColor(Color.parseColor("#FF4081"))
+     * or
+     * setIndicatorColor(0xFF00FF00)
+     * or
+     * setIndicatorColor(getResources().getColor(android.R.color.black))
+     */
+    public void setIndicatorColor(int color) {
+        this.mIndicatorColor = color;
+        mIndicator.setColor(color);
     }
 
-    private int measureDimension(int defaultSize,int measureSpec){
-        int result = defaultSize;
-        int specMode = MeasureSpec.getMode(measureSpec);
-        int specSize = MeasureSpec.getSize(measureSpec);
-        if (specMode == MeasureSpec.EXACTLY) {
-            result = specSize;
-        } else if (specMode == MeasureSpec.AT_MOST) {
-            result = Math.min(defaultSize, specSize);
+
+    /**
+     * You should pay attention to pass this parameter with two way:
+     * for example:
+     * 1. Only class Name,like "SimpleIndicator".(This way would use default package name with
+     * "com.wang.avi.indicators")
+     * 2. Class name with full package,like "com.my.android.indicators.SimpleIndicator".
+     *
+     * @param indicatorName the class must be extend Indicator .
+     */
+    public void setIndicator(String indicatorName) {
+        if (TextUtils.isEmpty(indicatorName)) {
+            return;
+        }
+        StringBuilder drawableClassName = new StringBuilder();
+        if (!indicatorName.contains(".")) {
+            String defaultPackageName = getClass().getPackage()
+                                                  .getName();
+            drawableClassName.append(defaultPackageName)
+                             .append(".indicators")
+                             .append(".");
+        }
+        drawableClassName.append(indicatorName);
+        try {
+            Class<?> drawableClass = Class.forName(drawableClassName.toString());
+            Indicator indicator = (Indicator) drawableClass.newInstance();
+            setIndicator(indicator);
+        } catch (ClassNotFoundException e) {
+            Log.e(TAG, "Didn't find your class , check the name again !");
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void smoothToShow() {
+        startAnimation(AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in));
+        setVisibility(VISIBLE);
+    }
+
+    public void smoothToHide() {
+        startAnimation(AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out));
+        setVisibility(GONE);
+    }
+
+    public void hide() {
+        mDismissed = true;
+        removeCallbacks(mDelayedShow);
+        long diff = System.currentTimeMillis() - mStartTime;
+        if (diff >= MIN_SHOW_TIME || mStartTime == -1) {
+            // The progress spinner has been shown long enough
+            // OR was not shown yet. If it wasn't shown yet,
+            // it will just never be shown.
+            setVisibility(View.GONE);
         } else {
-            result = defaultSize;
+            // The progress spinner is shown, but not long enough,
+            // so put a delayed message in to hide it when its been
+            // shown long enough.
+            if (!mPostedHide) {
+                postDelayed(mDelayedHide, MIN_SHOW_TIME - diff);
+                mPostedHide = true;
+            }
         }
-        return result;
+    }
+
+    public void show() {
+        // Reset the start time.
+        mStartTime = -1;
+        mDismissed = false;
+        removeCallbacks(mDelayedHide);
+        if (!mPostedShow) {
+            postDelayed(mDelayedShow, MIN_DELAY);
+            mPostedShow = true;
+        }
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        drawIndicator(canvas);
+    protected boolean verifyDrawable(Drawable who) {
+        return who == mIndicator
+                || super.verifyDrawable(who);
     }
 
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-        if (!mHasAnimation){
-            mHasAnimation=true;
-            applyAnimation();
+    void startAnimation() {
+        if (getVisibility() != VISIBLE) {
+            return;
         }
+
+        if (mIndicator instanceof Animatable) {
+            mShouldStartAnimationDrawable = true;
+        }
+        postInvalidate();
+    }
+
+    void stopAnimation() {
+        if (mIndicator instanceof Animatable) {
+            mIndicator.stop();
+            mShouldStartAnimationDrawable = false;
+        }
+        postInvalidate();
     }
 
     @Override
@@ -330,35 +256,165 @@ public class AVLoadingIndicatorView extends View {
         if (getVisibility() != v) {
             super.setVisibility(v);
             if (v == GONE || v == INVISIBLE) {
-                mIndicatorController.setAnimationStatus(BaseIndicatorController.AnimStatus.END);
+                stopAnimation();
             } else {
-                mIndicatorController.setAnimationStatus(BaseIndicatorController.AnimStatus.START);
+                startAnimation();
             }
         }
     }
 
     @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        mIndicatorController.setAnimationStatus(BaseIndicatorController.AnimStatus.CANCEL);
+    protected void onVisibilityChanged(View changedView, int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+        if (visibility == GONE || visibility == INVISIBLE) {
+            stopAnimation();
+        } else {
+            startAnimation();
+        }
+    }
+
+    @Override
+    public void invalidateDrawable(Drawable dr) {
+        if (verifyDrawable(dr)) {
+            final Rect dirty = dr.getBounds();
+            final int scrollX = getScrollX() + getPaddingLeft();
+            final int scrollY = getScrollY() + getPaddingTop();
+
+            invalidate(dirty.left + scrollX, dirty.top + scrollY,
+                    dirty.right + scrollX, dirty.bottom + scrollY);
+        } else {
+            super.invalidateDrawable(dr);
+        }
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        updateDrawableBounds(w, h);
+    }
+
+    private void updateDrawableBounds(int w, int h) {
+        // onDraw will translate the canvas so we draw starting at 0,0.
+        // Subtract out padding for the purposes of the calculations below.
+        w -= getPaddingRight() + getPaddingLeft();
+        h -= getPaddingTop() + getPaddingBottom();
+
+        int right = w;
+        int bottom = h;
+        int top = 0;
+        int left = 0;
+
+        if (mIndicator != null) {
+            // Maintain aspect ratio. Certain kinds of animated drawables
+            // get very confused otherwise.
+            final int intrinsicWidth = mIndicator.getIntrinsicWidth();
+            final int intrinsicHeight = mIndicator.getIntrinsicHeight();
+            final float intrinsicAspect = (float) intrinsicWidth / intrinsicHeight;
+            final float boundAspect = (float) w / h;
+            if (intrinsicAspect != boundAspect) {
+                if (boundAspect > intrinsicAspect) {
+                    // New width is larger. Make it smaller to match height.
+                    final int width = (int) (h * intrinsicAspect);
+                    left = (w - width) / 2;
+                    right = left + width;
+                } else {
+                    // New height is larger. Make it smaller to match width.
+                    final int height = (int) (w * (1 / intrinsicAspect));
+                    top = (h - height) / 2;
+                    bottom = top + height;
+                }
+            }
+            mIndicator.setBounds(left, top, right, bottom);
+        }
+    }
+
+    @Override
+    protected synchronized void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        drawTrack(canvas);
+    }
+
+    void drawTrack(Canvas canvas) {
+        final Drawable d = mIndicator;
+        if (d != null) {
+            // Translate canvas so a indeterminate circular progress bar with padding
+            // rotates properly in its animation
+            final int saveCount = canvas.save();
+
+            canvas.translate(getPaddingLeft(), getPaddingTop());
+
+            d.draw(canvas);
+            canvas.restoreToCount(saveCount);
+
+            if (mShouldStartAnimationDrawable && d instanceof Animatable) {
+                ((Animatable) d).start();
+                mShouldStartAnimationDrawable = false;
+            }
+        }
+    }
+
+    @Override
+    protected synchronized void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int dw = 0;
+        int dh = 0;
+
+        final Drawable d = mIndicator;
+        if (d != null) {
+            dw = Math.max(mMinWidth, Math.min(mMaxWidth, d.getIntrinsicWidth()));
+            dh = Math.max(mMinHeight, Math.min(mMaxHeight, d.getIntrinsicHeight()));
+        }
+
+        updateDrawableState();
+
+        dw += getPaddingLeft() + getPaddingRight();
+        dh += getPaddingTop() + getPaddingBottom();
+
+        final int measuredWidth = resolveSizeAndState(dw, widthMeasureSpec, 0);
+        final int measuredHeight = resolveSizeAndState(dh, heightMeasureSpec, 0);
+        setMeasuredDimension(measuredWidth, measuredHeight);
+    }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        updateDrawableState();
+    }
+
+    private void updateDrawableState() {
+        final int[] state = getDrawableState();
+        if (mIndicator != null && mIndicator.isStateful()) {
+            mIndicator.setState(state);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void drawableHotspotChanged(float x, float y) {
+        super.drawableHotspotChanged(x, y);
+
+        if (mIndicator != null) {
+            mIndicator.setHotspot(x, y);
+        }
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mIndicatorController.setAnimationStatus(BaseIndicatorController.AnimStatus.START);
+        startAnimation();
+        removeCallbacks();
     }
 
-    void drawIndicator(Canvas canvas){
-        mIndicatorController.draw(canvas, mPaint);
+    @Override
+    protected void onDetachedFromWindow() {
+        stopAnimation();
+        // This should come after stopAnimation(), otherwise an invalidate message remains in the
+        // queue, which can prevent the entire view hierarchy from being GC'ed during a rotation
+        super.onDetachedFromWindow();
+        removeCallbacks();
     }
 
-    void applyAnimation(){
-        mIndicatorController.initAnimation();
-    }
-
-    private int dp2px(int dpValue) {
-        return (int) getContext().getResources().getDisplayMetrics().density * dpValue;
+    private void removeCallbacks() {
+        removeCallbacks(mDelayedHide);
+        removeCallbacks(mDelayedShow);
     }
 
 

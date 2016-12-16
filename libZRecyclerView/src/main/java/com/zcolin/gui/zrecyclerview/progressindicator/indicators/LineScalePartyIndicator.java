@@ -1,18 +1,16 @@
-package com.zcolin.gui.zrecyclerview.progressindicator.indicator;
+package com.zcolin.gui.zrecyclerview.progressindicator.indicators;
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jack on 2015/10/19.
  */
-public class LineScalePartyIndicator extends BaseIndicatorController {
+public class LineScalePartyIndicator extends Indicator {
 
     public static final float SCALE=1.0f;
 
@@ -36,25 +34,25 @@ public class LineScalePartyIndicator extends BaseIndicatorController {
         }
     }
 
+
     @Override
-    public List<Animator> createAnimation() {
-        List<Animator> animators=new ArrayList<>();
+    public ArrayList<ValueAnimator> onCreateAnimators() {
+        ArrayList<ValueAnimator> animators=new ArrayList<>();
         long[] durations=new long[]{1260, 430, 1010, 730};
         long[] delays=new long[]{770, 290, 280, 740};
         for (int i = 0; i < 4; i++) {
             final int index=i;
-            ValueAnimator scaleAnim= ValueAnimator.ofFloat(1,0.4f,1);
+            ValueAnimator scaleAnim=ValueAnimator.ofFloat(1,0.4f,1);
             scaleAnim.setDuration(durations[i]);
             scaleAnim.setRepeatCount(-1);
             scaleAnim.setStartDelay(delays[i]);
-            scaleAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            addUpdateListener(scaleAnim,new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     scaleFloats[index] = (float) animation.getAnimatedValue();
                     postInvalidate();
                 }
             });
-            scaleAnim.start();
             animators.add(scaleAnim);
         }
         return animators;

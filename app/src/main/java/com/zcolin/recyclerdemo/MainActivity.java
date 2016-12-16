@@ -9,6 +9,7 @@
 
 package com.zcolin.recyclerdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,6 @@ import android.widget.Toast;
 
 import com.zcolin.gui.zrecyclerview.BaseRecyclerAdapter;
 import com.zcolin.gui.zrecyclerview.ZRecyclerView;
-import com.zcolin.gui.zrecyclerview.hfooter.google.DefGoogleHeader;
 import com.zcolin.gui.zrecyclerview.progressindicator.ProgressStyle;
 
 import java.util.ArrayList;
@@ -42,14 +42,21 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHeaderView(this, R.layout.view_recyclerheader);
         recyclerView.setFooterView(this, R.layout.view_recyclerfooter);
 
-        recyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
-        recyclerView.setLoadMoreProgressStyle(ProgressStyle.BallPulse);
+        recyclerView.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
+        recyclerView.setLoadMoreProgressStyle(ProgressStyle.LineScaleIndicator);
+        recyclerView.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener<String>() {
+            @Override
+            public void onItemClick(View covertView, int position, String data) {
+                Intent intent = new Intent(MainActivity.this, ScrollActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         //recyclerView.setIsShowNoMore(false);//不显示已加载全部
         // recyclerView.setIsLoadMoreEnabled(false);//到底加载是否可用
         // recyclerView.setIsRefreshEnabled(false);//下拉刷新是否可用
         recyclerView.setRefreshHeaderText("下拉刷新", "释放立即刷新", "正在刷新", "刷新完成");
-        recyclerView.setRefreshHeader(new DefGoogleHeader(this));
 
         notifyData(new ArrayList<String>(), false);
 

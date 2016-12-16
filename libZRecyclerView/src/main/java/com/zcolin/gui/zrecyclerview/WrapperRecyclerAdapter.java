@@ -98,7 +98,7 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     /**
      * 设置下拉刷新的进度条风格
      */
-    public WrapperRecyclerAdapter setRefreshProgressStyle(int style) {
+    public WrapperRecyclerAdapter setRefreshProgressStyle(String style) {
         if (refreshHeader != null && refreshHeader instanceof DefRefreshHeader) {
             ((DefRefreshHeader) refreshHeader).setProgressStyle(style);
         }
@@ -108,7 +108,7 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     /**
      * 设置加载更多的进度条风格
      */
-    public WrapperRecyclerAdapter setLoadMoreProgressStyle(int style) {
+    public WrapperRecyclerAdapter setLoadMoreProgressStyle(String style) {
         if (loadMoreFooter != null && refreshHeader instanceof DefRefreshHeader) {
             ((DefLoadMoreFooter) loadMoreFooter).setProgressStyle(style);
         }

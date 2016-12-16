@@ -1,11 +1,12 @@
-package com.zcolin.gui.zrecyclerview.progressindicator.indicator;
+package com.zcolin.gui.zrecyclerview.progressindicator.indicators;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
 /**
- * Created by Jack on 2015/10/19.
+ * Created by Jack on 2015/10/24.
+ * Email:81813780@qq.com
  */
 public class LineSpinFadeLoaderIndicator extends BallSpinFadeLoaderIndicator {
 
