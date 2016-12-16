@@ -146,6 +146,14 @@ public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
         }
     }
 
+    public View getRefreshHeaderView() {
+        return refreshHeader.getHeaderView();
+    }
+
+    public View getLoadMoreFooterView() {
+        return loadMoreFooter.getFootView();
+    }
+
     public View getHeaderView() {
         return headerView;
     }
@@ -237,6 +245,7 @@ public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
         }
         return this;
     }
+
 
     /**
      * 设置加载更多的进度条风格

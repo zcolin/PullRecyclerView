@@ -111,7 +111,7 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
      * @param style {@link ProgressStyle}
      */
     public void setProgressStyle(String style) {
-        if (style == ProgressStyle.SysProgress) {
+        if (ProgressStyle.SysProgress.equals(style)) {
             mProgressBar.setView(new ProgressBar(getContext(), null, android.R.attr.progressBarStyle));
         } else {
             AVLoadingIndicatorView progressView = new AVLoadingIndicatorView(this.getContext());
@@ -120,7 +120,7 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
             mProgressBar.setView(progressView);
         }
     }
-
+    
     /**
      * 设置控件的不同状态的文字
      *
@@ -184,7 +184,6 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
                 }
             }
         }
-        System.out.println("---" + mState + "--" + STATE_REFRESHING);
     }
 
     @Override

@@ -9,6 +9,7 @@
 
 package com.zcolin.recyclerdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -46,7 +47,24 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener<String>() {
             @Override
             public void onItemClick(View covertView, int position, String data) {
-                Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT)
+                     .show();
+                if (position == 0) {
+                    Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+                    startActivity(intent);
+                } else if (position == 1) {
+                    Intent intent = new Intent(MainActivity.this, ScrollViewLayoutActivity.class);
+                    startActivity(intent);
+                }
+                if (position == 2) {
+                    Intent intent = new Intent(MainActivity.this, TextViewActivity.class);
+                    startActivity(intent);
+                }
+                if (position == 3) {
+                    Intent intent = new Intent(MainActivity.this, RelativeLayoutActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -109,7 +127,17 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> dataList = new ArrayList<>();
         int start = 15 * (page - 1);
         for (int i = start; i < 15 * page; i++) {
-            dataList.add("Frist" + i);
+            if (i == 0) {
+                dataList.add("WebView");
+            } else if (i == 1) {
+                dataList.add("ScrollView");
+            } else if (i == 2) {
+                dataList.add("TextView");
+            } else if (i == 3) {
+                dataList.add("RelativeLayout");
+            } else {
+                dataList.add(String.format("第%d条数据", i));
+            }
         }
         return dataList;
     }
