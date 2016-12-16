@@ -173,7 +173,7 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
     }
 
     @Override
-    public void onMove(float offSet) {
+    public void onMove(float offSet, float sumOffSet) {
         if (getVisibleHeight() > 0 || offSet > 0) {
             setVisibleHeight((int) offSet + getVisibleHeight());
             if (mState <= STATE_PREPARED) { // 未处于刷新状态，更新箭头

@@ -38,7 +38,7 @@ public interface IRefreshHeader {
     /**
      * 下拉移动
      */
-    void onMove(float offSet);
+    void onMove(float offSet, float sumOffSet);
 
     /**
      * 下拉松开

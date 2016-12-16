@@ -32,7 +32,7 @@ import com.zcolin.gui.zrecyclerview.hfooter.IRefreshHeader;
 
 /**
  * 下拉刷新_到底加载 组件
- * <p/>
+ * <p>
  * 可以传入{@link android.support.v7.widget.RecyclerView.Adapter}及其子类，使用装饰者模式将用户传入的apapter进行包装，
  * 所以用户的adapter可以保持原有样式的操作
  */
@@ -55,6 +55,7 @@ public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
     private boolean isLoadingData = false;   //是否正在加载数据
     private boolean isRefreshing;//是否正在刷新
     private float mLastY = -1;      //上次触摸的的Y值
+    private float sumOffSet;
 
     private final AdapterDataObserver             mEmptyDataObserver = new DataObserver();
     private       AppBarStateChangeListener.State appbarState        = AppBarStateChangeListener.State.EXPANDED;
@@ -278,7 +279,7 @@ public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
 
     /**
      * 设置没有数据的EmptyView
-     * <p/>
+     * <p>
      * <p>注意：如果调用此函数，会将RecyclerView从原来的布局中移除添加到一个RelativeLayout中，然后将RelativeLayout放置到原来的布局中，
      * 也就是说，在RecyclerView和其父布局中间添加了一层RelitiveLayout，用来盛放RecyclerView和emptyView<p/>
      */
@@ -353,8 +354,10 @@ public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
         if (refreshing && isRefreshEnabled) {
             isRefreshing = true;
             refreshHeader.onRefreshing();
-            refreshHeader.onMove(refreshHeader.getHeaderView()
-                                              .getMeasuredHeight());
+
+            int offSet = refreshHeader.getHeaderView()
+                                      .getMeasuredHeight();
+            refreshHeader.onMove(offSet, offSet);
         }
     }
 
@@ -462,12 +465,14 @@ public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mLastY = ev.getRawY();
+                sumOffSet = 0;
                 break;
             case MotionEvent.ACTION_MOVE:
-                final float deltaY = ev.getRawY() - mLastY;
+                final float deltaY = (ev.getRawY() - mLastY) / dragRate;
                 mLastY = ev.getRawY();
+                sumOffSet += deltaY;
                 if (isOnTop() && isRefreshEnabled && appbarState == AppBarStateChangeListener.State.EXPANDED) {
-                    refreshHeader.onMove(deltaY / dragRate);
+                    refreshHeader.onMove(deltaY, sumOffSet);
                     if (refreshHeader.getVisibleHeight() > 0 && !isRefreshing) {
                         return false;
                     }
