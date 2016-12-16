@@ -9,7 +9,6 @@
 
 package com.zcolin.recyclerdemo;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -47,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener<String>() {
             @Override
             public void onItemClick(View covertView, int position, String data) {
-                Intent intent = new Intent(MainActivity.this, ScrollActivity.class);
-                startActivity(intent);
+                Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -26,13 +26,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.zcolin.gui.R;
-import com.zcolin.gui.zrecyclerview.ZScrollView;
 import com.zcolin.gui.zrecyclerview.progressindicator.AVLoadingIndicatorView;
 import com.zcolin.gui.zrecyclerview.progressindicator.ProgressStyle;
 import com.zcolin.gui.zrecyclerview.progressindicator.SimpleViewSwitcher;
 
 /**
- * 默认的下拉更多HeaderView，如需要简单的变换，可以直接在{@link ZScrollView}中设置
+ * 默认的下拉更多HeaderView，如需要简单的变换，可以直接在{@link com.zcolin.gui.zrecyclerview.ZRecyclerView}中设置
  * 复杂的需要继承此类重写或者实现{@link IRefreshHeader} 接口
  */
 public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {

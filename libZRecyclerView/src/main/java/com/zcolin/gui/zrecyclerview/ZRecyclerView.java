@@ -92,6 +92,10 @@ public class ZRecyclerView extends android.support.v7.widget.RecyclerView {
         mLoadingListener = listener;
     }
 
+    /**
+     * 此处设置OnItemClickListener是调用的{@link BaseRecyclerAdapter#setOnItemClickListener(BaseRecyclerAdapter.OnItemClickListener)}，
+     * 此处的泛型类型必须和{@link BaseRecyclerAdapter}的相同
+     */
     public <T> void setOnItemClickListener(BaseRecyclerAdapter.OnItemClickListener<T> li) {
         itemClickListener = li;
         if (mWrapAdapter != null) {
