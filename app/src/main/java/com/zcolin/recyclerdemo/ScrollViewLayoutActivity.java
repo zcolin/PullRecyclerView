@@ -13,8 +13,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-import com.zcolin.gui.zrecyclerview.ZScrollView;
-import com.zcolin.gui.zrecyclerview.progressindicator.ProgressStyle;
+import com.zcolin.gui.pullrecyclerview.PullScrollView;
+import com.zcolin.gui.pullrecyclerview.progressindicator.ProgressStyle;
 
 public class ScrollViewLayoutActivity extends AppCompatActivity {
 
@@ -24,13 +24,13 @@ public class ScrollViewLayoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scrollview);
 
 
-        final ZScrollView refreshLayout = (ZScrollView) findViewById(R.id.refresh_layout);
+        final PullScrollView refreshLayout = (PullScrollView) findViewById(R.id.refresh_layout);
         // refreshLayout.setIsRefreshEnabled(false);
         //        refreshLayout.setRefreshHeader(new DefRefreshHeader(this));
         //        refreshLayout.getRefreshHeaderView()
         //                     .setBackgroundColor(Color.BLUE);
         refreshLayout.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
-        refreshLayout.setRefreshListener(new ZScrollView.RefreshListener() {
+        refreshLayout.setRefreshListener(new PullScrollView.RefreshListener() {
             @Override
             public void onRefresh() {
                 new Handler().postDelayed(new Runnable() {

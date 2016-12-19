@@ -16,15 +16,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.zcolin.gui.zrecyclerview.BaseRecyclerAdapter;
-import com.zcolin.gui.zrecyclerview.ZRecyclerView;
-import com.zcolin.gui.zrecyclerview.progressindicator.ProgressStyle;
+import com.zcolin.gui.pullrecyclerview.BaseRecyclerAdapter;
+import com.zcolin.gui.pullrecyclerview.PullRecyclerView;
+import com.zcolin.gui.pullrecyclerview.progressindicator.ProgressStyle;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ZRecyclerView    recyclerView;
+    private PullRecyclerView recyclerView;
     private ZRecyclerAdapter recyclerAdapter;
     private int mPage = 1;
 
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (ZRecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (PullRecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLinearLayout(false);//默认已设置LinearLayoutManager
         recyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
         //设置数据为空时的EmptyView，DataObserver是注册在adapter之上的，也就是setAdapter是注册上，notifyDataSetChanged的时候才会生效
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         return dataList;
     }
 
-    class PullLoadMoreListener implements ZRecyclerView.PullLoadMoreListener {
+    class PullLoadMoreListener implements PullRecyclerView.PullLoadMoreListener {
         @Override
         public void onRefresh() {
             mPage = 1;

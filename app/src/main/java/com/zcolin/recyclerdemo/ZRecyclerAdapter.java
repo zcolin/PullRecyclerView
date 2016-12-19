@@ -12,7 +12,7 @@ package com.zcolin.recyclerdemo;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zcolin.gui.zrecyclerview.BaseRecyclerAdapter;
+import com.zcolin.gui.pullrecyclerview.BaseRecyclerAdapter;
 
 
 public class ZRecyclerAdapter extends BaseRecyclerAdapter<String> {

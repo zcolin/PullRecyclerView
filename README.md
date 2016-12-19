@@ -1,11 +1,11 @@
-ZRecyclerViewLib
+PullRecyclerViewLib
 =
 ### RecyclerView的下拉刷新到底加载的库，基于[SuperRecycleView](https://github.com/supercwn/SuperRecycleView)修改，<br>加载效果使用[AVLoadingIndicatorView](https://github.com/81813780/AVLoadingIndicatorView),特此感谢
 
 1. 制定自定义样式加载Footer请实现ILoadMoreFooter，参照DefLoadMoreFooter.
 2. 制定自定义样式下拉Header请实现IRefreshHeader，参照DefRefreshHeader.
 3. 可以设置HeaderView、FooterView、emptypView、下拉样式、加载样式等操作.
-4. 所有设置在ZRecyclerView中操作，不再在Aaapter中进行操作.
+4. 所有设置在PullRecyclerView中操作，不再在Aaapter中进行操作.
 
 Demo
 =
@@ -16,7 +16,7 @@ Demo
 app的build.gradle中添加
 ```
 dependencies {
-    compile 'com.github.zcolin:zcolin_ZRecyclerViewLib:1.0.0'
+    compile 'com.github.zcolin:zcolin_PullRecyclerViewLib:1.0.1'
 }
 ```
 工程的build.gradle中添加
@@ -37,7 +37,7 @@ usage
 recyclerView.setLinearLayout(false);
 
 //设置刷新和加载更多回调
-recyclerView.setOnPullLoadMoreListener(new ZRecyclerView.PullLoadMoreListener() {
+recyclerView.setOnPullLoadMoreListener(new PullRecyclerView.PullLoadMoreListener() {
     @Override
     public void onRefresh() {
         
