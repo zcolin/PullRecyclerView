@@ -37,14 +37,6 @@ import com.zcolin.gui.zrecyclerview.progressindicator.SimpleViewSwitcher;
 public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
     private static final int ROTATE_ANIM_DURATION = 180;
 
-    /**
-     * 手势状态
-     */
-    private static final int STATE_NORMAL     = 0;
-    private static final int STATE_PREPARED   = 1;
-    private static final int STATE_REFRESHING = 2;
-    private static final int STATE_DONE       = 3;
-
     private int mState;
 
     private String strInfo1 = "下拉刷新";
@@ -236,7 +228,7 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
         pre.edit()
            .putLong("refresh_time", timestamp)
            .apply();
-        mState = STATE_DONE;
+        mState = STATE_COMPLETE;
     }
 
     /**

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.zcolin.gui.zrecyclerview.BaseRecyclerAdapter;
 
 
-public class PullRecyclerAdapter extends BaseRecyclerAdapter<String> {
+public class ZRecyclerAdapter extends BaseRecyclerAdapter<String> {
 
     @Override
     public int getItemLayoutId(int viewType) {

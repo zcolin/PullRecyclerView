@@ -24,8 +24,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ZRecyclerView       recyclerView;
-    private PullRecyclerAdapter recyclerAdapter;
+    private ZRecyclerView    recyclerView;
+    private ZRecyclerAdapter recyclerAdapter;
     private int mPage = 1;
 
     @Override
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void notifyData(ArrayList<String> list, boolean isClear) {
         if (recyclerAdapter == null) {
-            recyclerAdapter = new PullRecyclerAdapter();
+            recyclerAdapter = new ZRecyclerAdapter();
             recyclerAdapter.addDatas(list);
             recyclerAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener<String>() {
                 @Override
