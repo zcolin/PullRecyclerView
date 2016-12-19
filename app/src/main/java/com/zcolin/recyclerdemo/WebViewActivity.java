@@ -16,7 +16,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.zcolin.gui.zrecyclerview.ZRefreshLayout;
+import com.zcolin.gui.zrecyclerview.ZScrollView;
 import com.zcolin.gui.zrecyclerview.progressindicator.ProgressStyle;
 
 public class WebViewActivity extends AppCompatActivity {
@@ -27,8 +27,9 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_webview);
 
 
-        final ZRefreshLayout refreshLayout = (ZRefreshLayout) findViewById(R.id.refresh_layout);
+        final ZScrollView refreshLayout = (ZScrollView) findViewById(R.id.refresh_layout);
         final WebView webView = (WebView) findViewById(R.id.webview);
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
         // refreshLayout.setIsRefreshEnabled(false);
@@ -36,7 +37,7 @@ public class WebViewActivity extends AppCompatActivity {
         //        refreshLayout.getRefreshHeaderView()
         //                     .setBackgroundColor(Color.BLUE);
         refreshLayout.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
-        refreshLayout.setRefreshListener(new ZRefreshLayout.RefreshListener() {
+        refreshLayout.setRefreshListener(new ZScrollView.RefreshListener() {
             @Override
             public void onRefresh() {
                 new Handler().postDelayed(new Runnable() {

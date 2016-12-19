@@ -18,16 +18,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.zcolin.gui.zrecyclerview.hfooter.DefRefreshHeader;
 import com.zcolin.gui.zrecyclerview.hfooter.IRefreshHeader;
 
 
 /**
- * 下拉刷新_到底加载 组件
- * <p>
+ * 下拉刷新的ScrollView
+ * <p/>
  */
-public class ZRefreshLayout extends LinearLayout {
+public class ZScrollView extends ScrollView {
     private RefreshListener mRefreshListener;
 
     private IRefreshHeader refreshHeader;
@@ -42,15 +43,15 @@ public class ZRefreshLayout extends LinearLayout {
 
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
 
-    public ZRefreshLayout(Context context) {
+    public ZScrollView(Context context) {
         this(context, null);
     }
 
-    public ZRefreshLayout(Context context, AttributeSet attrs) {
+    public ZScrollView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ZRefreshLayout(Context context, AttributeSet attrs, int defStyle) {
+    public ZScrollView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
@@ -59,13 +60,20 @@ public class ZRefreshLayout extends LinearLayout {
         if (isRefreshEnabled) {
             refreshHeader = new DefRefreshHeader(getContext());
         }
-        setOrientation(VERTICAL);
     }
 
     private void setLayout() {
         if (!isAdded) {
             isAdded = true;
-            addView(refreshHeader.getHeaderView(), 0, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            ViewGroup group = (ViewGroup) getParent();
+            LinearLayout container = new LinearLayout(getContext());
+            container.setOrientation(LinearLayout.VERTICAL);
+            int index = group.indexOfChild(this);
+            group.removeView(this);
+            group.addView(container, index, getLayoutParams());
+            container.addView(refreshHeader.getHeaderView(), new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            container.addView(this, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
     }
 
@@ -83,7 +91,7 @@ public class ZRefreshLayout extends LinearLayout {
     /**
      * 设置自定义的header
      */
-    public ZRefreshLayout setRefreshHeader(IRefreshHeader refreshHeader) {
+    public ZScrollView setRefreshHeader(IRefreshHeader refreshHeader) {
         this.refreshHeader = refreshHeader;
         return this;
     }
@@ -91,7 +99,7 @@ public class ZRefreshLayout extends LinearLayout {
     /**
      * 下拉刷新是否可用
      */
-    public ZRefreshLayout setIsRefreshEnabled(boolean enabled) {
+    public ZScrollView setIsRefreshEnabled(boolean enabled) {
         isRefreshEnabled = enabled;
         return this;
     }
@@ -99,7 +107,7 @@ public class ZRefreshLayout extends LinearLayout {
     /**
      * 下拉刷新滑动阻力系数，越大需要手指下拉的距离越大才能刷新
      */
-    public ZRefreshLayout setDragRate(int dragRate) {
+    public ZScrollView setDragRate(int dragRate) {
         this.dragRate = dragRate;
         return this;
     }
@@ -107,7 +115,7 @@ public class ZRefreshLayout extends LinearLayout {
     /**
      * 设置下拉刷新的进度条风格
      */
-    public ZRefreshLayout setRefreshProgressStyle(String style) {
+    public ZScrollView setRefreshProgressStyle(String style) {
         if (refreshHeader != null && refreshHeader instanceof DefRefreshHeader) {
             ((DefRefreshHeader) refreshHeader).setProgressStyle(style);
         }
@@ -117,7 +125,7 @@ public class ZRefreshLayout extends LinearLayout {
     /**
      * 设置加载更多的进度条风格
      */
-    public ZRefreshLayout setRefreshHeaderText(String str1, String str2, String str3, String str4) {
+    public ZScrollView setRefreshHeaderText(String str1, String str2, String str3, String str4) {
         if (refreshHeader != null && refreshHeader instanceof DefRefreshHeader) {
             ((DefRefreshHeader) refreshHeader).setInfoText(str1, str2, str3, str4);
         }
@@ -127,7 +135,7 @@ public class ZRefreshLayout extends LinearLayout {
     /**
      * 设置下拉刷新的箭头图标
      */
-    public ZRefreshLayout setArrowImage(int resId) {
+    public ZScrollView setArrowImage(int resId) {
         if (refreshHeader != null && refreshHeader instanceof DefRefreshHeader) {
             ((DefRefreshHeader) refreshHeader).setArrowImageView(resId);
         }
@@ -213,7 +221,7 @@ public class ZRefreshLayout extends LinearLayout {
                 }
                 break;
         }
-        return isRefreshEnabled;
+        return super.onTouchEvent(ev);
     }
 
     @Override
