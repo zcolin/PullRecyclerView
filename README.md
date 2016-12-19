@@ -48,15 +48,20 @@ recyclerView.setOnPullLoadMoreListener(new ZRecyclerView.PullLoadMoreListener() 
 
     }
 });
+
 //设置数据为空时的EmptyView，DataObserver是注册在adapter之上的，也就是setAdapter是注册上，notifyDataSetChanged的时候才会生效
 recyclerView.setEmptyView(this, R.layout.view_recycler_empty);
+
 //设置HeaderView和footerView
 recyclerView.setHeaderView(this, R.layout.view_recyclerheader);
 recyclerView.setFooterView(this, R.layout.view_recyclerfooter);
+
 //设置下拉刷新进度条样式
 recyclerView.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
+
 //设置加载更多进度条样式
 recyclerView.setLoadMoreProgressStyle(ProgressStyle.LineScaleIndicator);
+
 //设置Item监听
 recyclerView.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener<String>() {
     @Override
@@ -68,16 +73,22 @@ recyclerView.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener<
 
 //所有数据加载完毕后，不显示已加载全部
 recyclerView.setIsShowNoMore(false);
+
 //到底加载是否可用
 recyclerView.setIsLoadMoreEnabled(false);
+
 //下拉刷新是否可用
 recyclerView.setIsRefreshEnabled(false);
+
 //设置下拉刷新显示的文字
 recyclerView.setRefreshHeaderText("下拉刷新", "释放立即刷新", "正在刷新", "刷新完成");
+
 //有下拉刷新效果，手动调用刷新数据
 recyclerView.refreshWithPull();
+
 //没有下拉刷新效果，直接刷新数据
 recyclerView.refresh();
+
 //只有下拉刷新效果，不刷新数据
 recyclerView.setRefreshing(true);
 ```
