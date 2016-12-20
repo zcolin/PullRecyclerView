@@ -25,7 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.zcolin.gui.R;
+import com.zcolin.gui.pullrecyclerview.R;
 import com.zcolin.gui.pullrecyclerview.progressindicator.AVLoadingIndicatorView;
 import com.zcolin.gui.pullrecyclerview.progressindicator.ProgressStyle;
 import com.zcolin.gui.pullrecyclerview.progressindicator.SimpleViewSwitcher;
