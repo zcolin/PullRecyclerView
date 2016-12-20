@@ -23,8 +23,8 @@ import android.view.ViewConfiguration;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
-import com.zcolin.gui.R;
 import com.zcolin.gui.pullrecyclerview.PullSwipeMenuRecyclerView;
+import com.zcolin.gui.pullrecyclerview.R;
 
 
 /**

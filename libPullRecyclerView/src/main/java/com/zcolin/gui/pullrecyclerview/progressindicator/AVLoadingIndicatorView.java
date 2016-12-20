@@ -15,7 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
-import com.zcolin.gui.R;
+import com.zcolin.gui.pullrecyclerview.R;
 import com.zcolin.gui.pullrecyclerview.progressindicator.indicators.BallPulseIndicator;
 import com.zcolin.gui.pullrecyclerview.progressindicator.indicators.Indicator;
 
