@@ -5,11 +5,13 @@ PullRecyclerViewLib
 1. 制定自定义样式加载Footer请实现ILoadMoreFooter，参照DefLoadMoreFooter.
 2. 制定自定义样式下拉Header请实现IRefreshHeader，参照DefRefreshHeader.
 3. 可以设置HeaderView、FooterView、emptypView、下拉样式、加载样式等操作.
-4. 所有设置在PullRecyclerView中操作，不再在Aaapter中进行操作.
+4. 所有设置在PullRecyclerView中操作，不再在Adapter中进行操作.
+5. 支持滑动菜单.
 
 Demo
 =
 ![](screenshot/1.gif)
+![](screenshot/2.gif)
 
 
 ## Gradle
