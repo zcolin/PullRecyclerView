@@ -22,6 +22,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.zcolin.gui.pullrecyclerview.hfooter.DefLoadMoreFooter;
@@ -32,7 +33,7 @@ import com.zcolin.gui.pullrecyclerview.hfooter.IRefreshHeader;
 
 /**
  * 下拉刷新_到底加载 组件
- * <p/>
+ * <p>
  * 可以传入{@link android.support.v7.widget.RecyclerView.Adapter}及其子类，使用装饰者模式将用户传入的apapter进行包装，
  * 所以用户的adapter可以保持原有样式的操作
  */
@@ -40,8 +41,8 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     private WrapperRecyclerAdapter                mWrapAdapter;
     private PullRecyclerView.PullLoadMoreListener mLoadingListener;
     private RelativeLayout                        mEmptyViewContainer;
-    private View                                  headerView;
 
+    private View            headerView;
     private View            footerView;
     private IRefreshHeader  refreshHeader;
     private ILoadMoreFooter loadMoreFooter;
@@ -76,11 +77,11 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
 
     private void init() {
         if (isRefreshEnabled) {
-            refreshHeader = new DefRefreshHeader(getContext());
+            setRefreshHeader(new DefRefreshHeader(getContext()));
         }
 
         if (isLoadMoreEnabled) {
-            loadMoreFooter = new DefLoadMoreFooter(getContext());
+            setLoadMoreFooter(new DefLoadMoreFooter(getContext()));
         }
 
         setLinearLayout(false);
@@ -114,7 +115,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      * @param isForce 如果已经设置了，是否强制设置
      */
     public void setLinearLayout(boolean isForce) {
-        if (isForce || getLayoutManager() != null || !(getLayoutManager() instanceof LinearLayoutManager)) {
+        if (isForce || getLayoutManager() == null || !(getLayoutManager() instanceof LinearLayoutManager)) {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             setLayoutManager(linearLayoutManager);
@@ -127,7 +128,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      * @param isForce 如果已经设置了，是否强制设置
      */
     public void setGridLayout(boolean isForce, int spanCount) {
-        if (isForce || getLayoutManager() != null || !(getLayoutManager() instanceof GridLayoutManager)) {
+        if (isForce || getLayoutManager() == null || !(getLayoutManager() instanceof GridLayoutManager)) {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), spanCount);
             gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             setLayoutManager(gridLayoutManager);
@@ -140,11 +141,20 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      * @param isForce 如果已经设置了，是否强制设置
      */
     public void setStaggeredGridLayout(boolean isForce, int spanCount) {
-        if (isForce || getLayoutManager() != null || !(getLayoutManager() instanceof StaggeredGridLayoutManager)) {
+        if (isForce || getLayoutManager() == null || !(getLayoutManager() instanceof StaggeredGridLayoutManager)) {
             StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(spanCount, LinearLayoutManager.VERTICAL);
             setLayoutManager(staggeredGridLayoutManager);
         }
     }
+
+    /**
+     * 增加默认分割线
+     */
+    public PullRecyclerView addDefaultItemDecoration() {
+        addItemDecoration(new RecycleViewDivider(getContext(), LinearLayout.HORIZONTAL));
+        return this;
+    }
+
 
     public View getRefreshHeaderView() {
         return refreshHeader.getHeaderView();
@@ -164,25 +174,25 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
 
     public PullRecyclerView setHeaderView(View headerView) {
         this.headerView = headerView;
+        this.headerView.setTag("reservedView");
         return this;
     }
 
     public PullRecyclerView setHeaderView(Context context, int headerViewLayoutId) {
-        this.headerView = LayoutInflater.from(context)
-                                        .inflate(headerViewLayoutId, null);
-        return this;
+        return setHeaderView(LayoutInflater.from(context)
+                                    .inflate(headerViewLayoutId, null));
     }
 
     public PullRecyclerView setFooterView(View footerView) {
         this.footerView = footerView;
+        this.footerView.setTag("reservedView");
         return this;
 
     }
 
     public PullRecyclerView setFooterView(Context context, int footerViewLayoutId) {
-        this.footerView = LayoutInflater.from(context)
-                                        .inflate(footerViewLayoutId, null);
-        return this;
+        return setFooterView(LayoutInflater.from(context)
+                                    .inflate(footerViewLayoutId, null));
     }
 
     /**
@@ -190,6 +200,8 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      */
     public PullRecyclerView setLoadMoreFooter(ILoadMoreFooter loadMoreFooter) {
         this.loadMoreFooter = loadMoreFooter;
+        this.loadMoreFooter.getFootView()
+                           .setTag("reservedView");
         return this;
     }
 
@@ -198,6 +210,8 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      */
     public PullRecyclerView setRefreshHeader(IRefreshHeader refreshHeader) {
         this.refreshHeader = refreshHeader;
+        this.refreshHeader.getHeaderView()
+                          .setTag("reservedView");
         return this;
     }
 
@@ -288,7 +302,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
 
     /**
      * 设置没有数据的EmptyView
-     * <p/>
+     * <p>
      * <p>注意：如果调用此函数，会将RecyclerView从原来的布局中移除添加到一个RelativeLayout中，然后将RelativeLayout放置到原来的布局中，
      * 也就是说，在RecyclerView和其父布局中间添加了一层RelitiveLayout，用来盛放RecyclerView和emptyView<p/>
      */

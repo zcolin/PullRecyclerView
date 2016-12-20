@@ -24,6 +24,7 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
 import com.zcolin.gui.R;
+import com.zcolin.gui.pullrecyclerview.PullSwipeMenuRecyclerView;
 
 
 /**
@@ -31,7 +32,7 @@ import com.zcolin.gui.R;
  * blog: http://supercwn.github.io/
  * GitHub: https://github.com/supercwn
  */
-public class ZSwipeMenuLayout extends FrameLayout {
+public class SwipeMenuLayout extends FrameLayout {
 
 	private static final int STATE_CLOSE = 0;
 	private static final int STATE_OPEN = 1;
@@ -53,15 +54,15 @@ public class ZSwipeMenuLayout extends FrameLayout {
 	private boolean swipeEnable = true;
 	private int animDuration;
 
-	public ZSwipeMenuLayout(Context context) {
+	public SwipeMenuLayout(Context context) {
 		this(context, null);
 	}
 
-	public ZSwipeMenuLayout(Context context, AttributeSet attrs) {
+	public SwipeMenuLayout(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
-	public ZSwipeMenuLayout(Context context, AttributeSet attrs, int defStyle) {
+	public SwipeMenuLayout(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		if(!isInEditMode()){
 			TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SwipeMenu, 0, defStyle);
@@ -176,7 +177,7 @@ public class ZSwipeMenuLayout extends FrameLayout {
 				lGap + (OVER_API_11 ? mContentView.getMeasuredWidthAndState() : mContentView.getMeasuredWidth()) - dis,
 				mContentView.getBottom());
 
-		if (mSwipeDirection == ZSwipeMenuRecyclerView.DIRECTION_LEFT) {
+		if (mSwipeDirection == PullSwipeMenuRecyclerView.DIRECTION_LEFT) {
 			mMenuView.layout(getMeasuredWidth() - dis, mMenuView.getTop(),
 					getMeasuredWidth() + (OVER_API_11 ? mMenuView.getMeasuredWidthAndState() : mMenuView.getMeasuredWidth()) - dis,
 					mMenuView.getBottom());
@@ -207,7 +208,7 @@ public class ZSwipeMenuLayout extends FrameLayout {
 
 	public void closeOpenedMenu() {
 		state = STATE_CLOSE;
-		if (mSwipeDirection == ZSwipeMenuRecyclerView.DIRECTION_LEFT) {
+		if (mSwipeDirection == PullSwipeMenuRecyclerView.DIRECTION_LEFT) {
 			mBaseX = -mContentView.getLeft();
 			mCloseScroller.startScroll(0, 0, mMenuView.getWidth(), 0, animDuration);
 		} else {
@@ -219,7 +220,7 @@ public class ZSwipeMenuLayout extends FrameLayout {
 
 	public void smoothOpenMenu() {
 		state = STATE_OPEN;
-		if (mSwipeDirection == ZSwipeMenuRecyclerView.DIRECTION_LEFT) {
+		if (mSwipeDirection == PullSwipeMenuRecyclerView.DIRECTION_LEFT) {
 			mOpenScroller.startScroll(-mContentView.getLeft(), 0, mMenuView.getWidth(), 0, animDuration);
 		} else {
 			mOpenScroller.startScroll(mContentView.getLeft(), 0, mMenuView.getWidth(), 0, animDuration);
@@ -265,7 +266,7 @@ public class ZSwipeMenuLayout extends FrameLayout {
 
 		lp = (LayoutParams) mMenuView.getLayoutParams();
 		tGap = getPaddingTop() + lp.topMargin;
-		if (mSwipeDirection == ZSwipeMenuRecyclerView.DIRECTION_LEFT) {
+		if (mSwipeDirection == PullSwipeMenuRecyclerView.DIRECTION_LEFT) {
 			mMenuView.layout(getMeasuredWidth(), tGap,
 					getMeasuredWidth() + (OVER_API_11 ? mMenuView.getMeasuredWidthAndState() : mMenuView.getMeasuredWidth()),
 					tGap + mMenuView.getMeasuredHeightAndState());

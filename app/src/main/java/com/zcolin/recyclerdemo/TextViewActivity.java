@@ -26,9 +26,8 @@ public class TextViewActivity extends AppCompatActivity {
 
         final PullScrollView refreshLayout = (PullScrollView) findViewById(R.id.refresh_layout);
         // refreshLayout.setIsRefreshEnabled(false);
-        //        refreshLayout.setRefreshHeader(new DefRefreshHeader(this));
-//        refreshLayout.getRefreshHeaderView()
-        //                     .setBackgroundColor(Color.BLUE);
+        // refreshLayout.setRefreshHeader(new DefRefreshHeader(this));
+        // refreshLayout.getRefreshHeaderView().setBackgroundColor(Color.BLUE);
         refreshLayout.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
         refreshLayout.setRefreshListener(new PullScrollView.RefreshListener() {
             @Override

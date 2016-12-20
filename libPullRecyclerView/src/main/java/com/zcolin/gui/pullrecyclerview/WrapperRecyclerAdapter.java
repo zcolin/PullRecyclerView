@@ -239,7 +239,7 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    return isReservedItemType(position) ? gridManager.getSpanCount() : 1;
+                    return isReservedItemType(getItemViewType(position)) ? gridManager.getSpanCount() : 1;
                 }
             });
         }
@@ -257,7 +257,7 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
         int position = holder.getLayoutPosition();
         if (lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams
-                && (isRefreshHeader(position) || isLoadMoreFooter(position) || isHeaderView(position) || isFooterView(position))) {
+                && isReservedItemType(getItemViewType(position))) {
             StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
             p.setFullSpan(true);
         }

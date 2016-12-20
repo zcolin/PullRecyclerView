@@ -1,13 +1,13 @@
 /*
- * **********************************************************
+ * *********************************************************
  *   author   colin
  *   company  fosung
  *   email    wanglin2046@126.com
- *   date     16-10-11 下午5:52
- * *********************************************************
+ *   date     16-12-20 下午1:06
+ * ********************************************************
  */
 
-package com.zcolin.gui.pullrecyclerview.swipemenu;
+package com.zcolin.gui.pullrecyclerview;
 
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.animation.Interpolator;
 
-import com.zcolin.gui.pullrecyclerview.PullRecyclerView;
+import com.zcolin.gui.pullrecyclerview.swipemenu.SwipeMenuLayout;
 
 
 /**
@@ -27,7 +27,7 @@ import com.zcolin.gui.pullrecyclerview.PullRecyclerView;
  * blog: http://supercwn.github.io/
  * GitHub: https://github.com/supercwn
  */
-public class ZSwipeMenuRecyclerView extends PullRecyclerView {
+public class PullSwipeMenuRecyclerView extends PullRecyclerView {
 
 	public static final int TOUCH_STATE_NONE = 0;
     public static final int TOUCH_STATE_X = 1;
@@ -37,12 +37,12 @@ public class ZSwipeMenuRecyclerView extends PullRecyclerView {
     public static final int DIRECTION_RIGHT = -1;
     protected int mDirection = DIRECTION_LEFT; // swipe from right to left by default
 
-    protected float            mDownX;
-    protected float            mDownY;
-    protected int              mTouchState;
-    protected int              mTouchPosition;
-    protected ZSwipeMenuLayout mTouchView;
-    protected OnSwipeListener  mOnSwipeListener;
+    protected float           mDownX;
+    protected float           mDownY;
+    protected int             mTouchState;
+    protected int             mTouchPosition;
+    protected SwipeMenuLayout mTouchView;
+    protected OnSwipeListener mOnSwipeListener;
 
     protected Interpolator mCloseInterpolator;
     protected Interpolator mOpenInterpolator;
@@ -53,15 +53,15 @@ public class ZSwipeMenuRecyclerView extends PullRecyclerView {
     protected float                      dx;
     protected float                      dy;
 
-    public ZSwipeMenuRecyclerView(Context context) {
+    public PullSwipeMenuRecyclerView(Context context) {
 		this(context, null);
 	}
 
-	public ZSwipeMenuRecyclerView(Context context, AttributeSet attrs) {
+	public PullSwipeMenuRecyclerView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
-    public ZSwipeMenuRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public PullSwipeMenuRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
@@ -126,8 +126,8 @@ public class ZSwipeMenuRecyclerView extends PullRecyclerView {
                     super.onTouchEvent(cancelEvent);
                     return true;
                 }
-                if (view instanceof ZSwipeMenuLayout) {
-                    mTouchView = (ZSwipeMenuLayout) view;
+                if (view instanceof SwipeMenuLayout) {
+                    mTouchView = (SwipeMenuLayout) view;
                     mTouchView.setSwipeDirection(mDirection);
                 }
                 if (mTouchView != null) {
@@ -177,8 +177,8 @@ public class ZSwipeMenuRecyclerView extends PullRecyclerView {
                     float eX = ev.getX();
                     float eY = ev.getY();
                     View upView = findChildViewUnder(eX, eY);
-                    if(upView instanceof ZSwipeMenuLayout){
-                        ZSwipeMenuLayout smView = (ZSwipeMenuLayout)upView;
+                    if(upView instanceof SwipeMenuLayout){
+                        SwipeMenuLayout smView = (SwipeMenuLayout)upView;
                         int x = (int)eX - smView.getLeft();
                         int y = (int)eY - smView.getTop();
                         View menuView = smView.getMenuView();
@@ -213,13 +213,13 @@ public class ZSwipeMenuRecyclerView extends PullRecyclerView {
      */
 	public void smoothOpenMenu(int position) {
         View view = mLlm.findViewByPosition(position);
-        if (view instanceof ZSwipeMenuLayout) {
+        if (view instanceof SwipeMenuLayout) {
             mTouchPosition = position;
             // close pre opened swipe menu
             if (mTouchView != null && mTouchView.isOpen()) {
                 mTouchView.smoothCloseMenu();
             }
-            mTouchView = (ZSwipeMenuLayout) view;
+            mTouchView = (SwipeMenuLayout) view;
             mTouchView.setSwipeDirection(mDirection);
             mTouchView.smoothOpenMenu();
         }
@@ -243,7 +243,7 @@ public class ZSwipeMenuRecyclerView extends PullRecyclerView {
      * get current touched view
      * @return touched view, maybe null
      */
-    public ZSwipeMenuLayout getTouchView() {
+    public SwipeMenuLayout getTouchView() {
         return mTouchView;
     }
 

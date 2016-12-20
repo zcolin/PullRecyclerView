@@ -114,7 +114,7 @@ public class DefLoadMoreFooter extends LinearLayout implements ILoadMoreFooter {
         mText.setText(STR_NOMORE);
         mProgressBar.setVisibility(View.GONE);
         this.setVisibility(isShowNoMore ? View.VISIBLE : View.GONE);
-        this.getLayoutParams().height = 5;
+        this.getLayoutParams().height = isShowNoMore ? mMeasuredHeight : 5;
     }
 
     @Override

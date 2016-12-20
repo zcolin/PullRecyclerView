@@ -33,9 +33,8 @@ public class WebViewActivity extends AppCompatActivity {
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
         // refreshLayout.setIsRefreshEnabled(false);
-        //        refreshLayout.setRefreshHeader(new DefRefreshHeader(this));
-        //        refreshLayout.getRefreshHeaderView()
-        //                     .setBackgroundColor(Color.BLUE);
+        // refreshLayout.setRefreshHeader(new DefRefreshHeader(this));
+        // refreshLayout.getRefreshHeaderView().setBackgroundColor(Color.BLUE);
         refreshLayout.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
         refreshLayout.setRefreshListener(new PullScrollView.RefreshListener() {
             @Override

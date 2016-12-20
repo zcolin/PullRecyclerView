@@ -24,6 +24,10 @@
         <activity android:name=".RelativeLayoutActivity"/>
         <activity android:name=".WebViewActivity"/>
         <activity android:name=".ScrollViewLayoutActivity"/>
+        <activity android:name=".GridLayoutActivity"/>
+        <activity android:name=".StaggeredGridLayoutActivity"/>
+        <activity android:name=".DecorationActivity"/>
+        <activity android:name=".SwipeMenuLayoutActivity"/>
     </application>
 
 </manifest>
