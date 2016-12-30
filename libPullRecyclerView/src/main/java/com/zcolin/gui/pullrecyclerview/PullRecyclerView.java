@@ -404,7 +404,9 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
         }
 
         isLoadingData = false;
-        loadMoreFooter.onComplete();
+        if (!isNoMore) {
+            loadMoreFooter.onComplete();
+        }
     }
 
     /**
