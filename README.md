@@ -18,7 +18,7 @@ Demo
 app的build.gradle中添加
 ```
 dependencies {
-    compile 'com.github.zcolin:PullRecyclerView:1.0.6'
+    compile 'com.github.zcolin:PullRecyclerView:latest.release'
 }
 ```
 工程的build.gradle中添加
