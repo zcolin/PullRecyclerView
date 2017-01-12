@@ -400,7 +400,6 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
         if (isRefreshing) {
             isRefreshing = false;
             refreshHeader.onComplete();
-            setNoMore(false);
         }
 
         isLoadingData = false;
