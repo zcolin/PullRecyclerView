@@ -416,7 +416,8 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     public void setNoMore(boolean noMore) {
         isLoadingData = false;
         isNoMore = noMore;
-        if (isNoMore) {
+        //数据大于1屏
+        if (isNoMore && mWrapAdapter != null && mWrapAdapter.getItemCount() > getChildCount() && getChildCount() > 0) {
             loadMoreFooter.onNoMore();
         } else {
             loadMoreFooter.onComplete();
