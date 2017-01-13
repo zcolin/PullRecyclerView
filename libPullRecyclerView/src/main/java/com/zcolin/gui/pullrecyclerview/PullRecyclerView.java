@@ -308,12 +308,18 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      * <p>注意：如果调用此函数，会将RecyclerView从原来的布局中移除添加到一个RelativeLayout中，然后将RelativeLayout放置到原来的布局中，
      * 也就是说，在RecyclerView和其父布局中间添加了一层RelitiveLayout，用来盛放RecyclerView和emptyView<p/>
      */
-    public void setEmptyView(View emptyView) {
+    public ViewGroup setEmptyView(View emptyView) {
         ViewGroup group = (ViewGroup) getParent();
         RelativeLayout container = new RelativeLayout(getContext());
-        int index = group.indexOfChild(this);
-        group.removeView(this);
-        group.addView(container, index, getLayoutParams());
+        if (group == null) {
+            group = new RelativeLayout(getContext());
+            group.addView(container, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        }else{
+            int index = group.indexOfChild(this);
+            group.removeView(this);
+            group.addView(container, index, getLayoutParams());
+        }
+
         container.addView(this, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         RelativeLayout.LayoutParams emptyViewParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -323,6 +329,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
         container.addView(mEmptyViewContainer, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         this.mEmptyViewContainer.setVisibility(View.GONE);
+        return group;
     }
 
     /**
