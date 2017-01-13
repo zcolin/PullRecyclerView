@@ -1,7 +1,12 @@
 PullRecyclerViewLib
 =
-### RecyclerView的下拉刷新到底加载的库，基于[SuperRecycleView](https://github.com/supercwn/SuperRecycleView)修改，<br>加载效果使用[AVLoadingIndicatorView](https://github.com/81813780/AVLoadingIndicatorView),特此感谢
-
+### RecyclerView的下拉刷新到底加载的库，基于[SuperRecycleView](https://github.com/supercwn/SuperRecycleView)修改，<br>加载效果使用[AVLoadingIndicatorView](https://github.com/81813780/AVLoadingIndicatorView),特此感谢。
+#### 但就我个人而言，更喜欢谷歌的下拉小圆圈，所以我一般使用[ZRecyclerView](https://github.com/zcolin/ZRecyclerView)。
+  
+  
+  
+Feature
+=
 1. 制定自定义样式加载Footer请实现ILoadMoreFooter，参照DefLoadMoreFooter.
 2. 制定自定义样式下拉Header请实现IRefreshHeader，参照DefRefreshHeader.
 3. 可以设置HeaderView、FooterView、emptypView、下拉样式、加载样式等操作.
