@@ -638,6 +638,41 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     private class DataObserver extends AdapterDataObserver {
         @Override
         public void onChanged() {
+            checkEmptyView();
+            mWrapAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            mWrapAdapter.notifyItemRangeInserted(headerView == null ? positionStart + 1 : positionStart + 2, itemCount);
+        }
+
+        @Override
+        public void onItemRangeRemoved(int positionStart, int itemCount) {
+            mWrapAdapter.notifyItemRangeRemoved(headerView == null ? positionStart + 1 : positionStart + 2, itemCount);
+            checkEmptyView();
+        }
+
+        @Override
+        public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+            int from = headerView == null ? fromPosition + 1 : fromPosition + 2;
+            int to = headerView == null ? toPosition + 1 : toPosition + 2;
+            mWrapAdapter.notifyItemMoved(from, to);
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount) {
+            mWrapAdapter.notifyItemRangeChanged(headerView == null ? positionStart + 1 : positionStart + 2, itemCount);
+            checkEmptyView();
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+            mWrapAdapter.notifyItemRangeChanged(headerView == null ? positionStart + 1 : positionStart + 2, itemCount, payload);
+            checkEmptyView();
+        }
+
+        private void checkEmptyView() {
             if (mEmptyViewContainer != null) {
                 if (mWrapAdapter.getAdapter()
                                 .getItemCount() == 0) {
@@ -651,35 +686,6 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
                     mEmptyViewContainer.setVisibility(View.GONE);
                 }
             }
-
-            mWrapAdapter.notifyDataSetChanged();
-        }
-
-        @Override
-        public void onItemRangeInserted(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeInserted(headerView == null ? positionStart + 1 : positionStart + 2, itemCount);
-        }
-
-        @Override
-        public void onItemRangeRemoved(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeRemoved(headerView == null ? positionStart + 1 : positionStart + 2, itemCount);
-        }
-
-        @Override
-        public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-            int from = headerView == null ? fromPosition + 1 : fromPosition + 2;
-            int to = headerView == null ? toPosition + 1 : toPosition + 2;
-            mWrapAdapter.notifyItemMoved(from, to);
-        }
-
-        @Override
-        public void onItemRangeChanged(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeChanged(headerView == null ? positionStart + 1 : positionStart + 2, itemCount);
-        }
-
-        @Override
-        public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-            mWrapAdapter.notifyItemRangeChanged(headerView == null ? positionStart + 1 : positionStart + 2, itemCount, payload);
         }
     }
 
