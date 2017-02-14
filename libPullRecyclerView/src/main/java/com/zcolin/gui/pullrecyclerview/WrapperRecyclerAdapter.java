@@ -248,6 +248,11 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onDetachedFromRecyclerView(android.support.v7.widget.RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+
+        if (null == adapter) {
+            return;
+        }
         adapter.onDetachedFromRecyclerView(recyclerView);
     }
 
@@ -266,27 +271,31 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+
+        int position = holder.getAdapterPosition();
+        if (null == adapter || isHeaderView(position) || isFooterView(position)) {
+            return;
+        }
+
         adapter.onViewDetachedFromWindow(holder);
     }
 
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        super.onViewRecycled(holder);
+
+        int position = holder.getAdapterPosition();
+        if (null == adapter || isHeaderView(position) || isFooterView(position)) {
+            return;
+        }
+
         adapter.onViewRecycled(holder);
     }
 
     @Override
     public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
         return adapter.onFailedToRecycleView(holder);
-    }
-
-    @Override
-    public void unregisterAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
-        adapter.unregisterAdapterDataObserver(observer);
-    }
-
-    @Override
-    public void registerAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
-        adapter.registerAdapterDataObserver(observer);
     }
 
     private class SimpleViewHolder extends RecyclerView.ViewHolder {

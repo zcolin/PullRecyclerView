@@ -53,6 +53,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     private boolean isLoadMoreEnabled = true;    //设置到底加载是否可用
     private float   dragRate          = 2;//下拉刷新滑动阻力系数，越大需要手指下拉的距离越大才能刷新
     private BaseRecyclerAdapter.OnItemClickListener itemClickListener;
+    private BaseRecyclerAdapter.OnItemLongClickListener itemLongClickListener;
 
     private boolean isNoMore      = false;   //是否已没有更多
     private boolean isLoadingData = false;   //是否正在加载数据
@@ -105,6 +106,21 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
         if (mWrapAdapter != null) {
             if (mWrapAdapter.getAdapter() instanceof BaseRecyclerAdapter) {
                 ((BaseRecyclerAdapter) mWrapAdapter.getAdapter()).setOnItemClickListener(li);
+            } else {
+                throw new IllegalArgumentException("adapter 必须继承BaseRecyclerAdapter 才能使用setOnItemClickListener");
+            }
+        }
+    }
+
+    /**
+     * 此处设置OnItemLongClickListener是调用的{@link BaseRecyclerAdapter#setOnItemLongClickListener(BaseRecyclerAdapter.OnItemLongClickListener)}，
+     * 此处的泛型类型必须和{@link BaseRecyclerAdapter}的相同
+     */
+    public <T> void setOnItemLongClickListener(BaseRecyclerAdapter.OnItemLongClickListener<T> li) {
+        itemLongClickListener = li;
+        if (mWrapAdapter != null) {
+            if (mWrapAdapter.getAdapter() instanceof BaseRecyclerAdapter) {
+                ((BaseRecyclerAdapter) mWrapAdapter.getAdapter()).setOnItemLongClickListener(li);
             } else {
                 throw new IllegalArgumentException("adapter 必须继承BaseRecyclerAdapter 才能使用setOnItemClickListener");
             }
@@ -469,6 +485,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
         super.setAdapter(mWrapAdapter);
 
         setOnItemClickListener(itemClickListener);
+        setOnItemLongClickListener(itemLongClickListener);
         if (!hasRegisterEmptyObserver) {
             adapter.registerAdapterDataObserver(mEmptyDataObserver);
             hasRegisterEmptyObserver = true;
@@ -635,34 +652,34 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
                 }
             }
 
-            if (mWrapAdapter != null) {
-                mWrapAdapter.notifyDataSetChanged();
-            }
+            mWrapAdapter.notifyDataSetChanged();
         }
 
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeInserted(positionStart, itemCount);
-        }
-
-        @Override
-        public void onItemRangeChanged(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount);
-        }
-
-        @Override
-        public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-            mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount, payload);
+            mWrapAdapter.notifyItemInserted(headerView == null ? positionStart + 1 : positionStart + 2);
         }
 
         @Override
         public void onItemRangeRemoved(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeRemoved(positionStart, itemCount);
+            mWrapAdapter.notifyItemRemoved(headerView == null ? positionStart + 1 : positionStart + 2);
         }
 
         @Override
         public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-            mWrapAdapter.notifyItemMoved(fromPosition, toPosition);
+            int from = headerView == null ? fromPosition + 1 : fromPosition + 2;
+            int to = headerView == null ? toPosition + 1 : toPosition + 2;
+            mWrapAdapter.notifyItemMoved(from, to);
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount) {
+            mWrapAdapter.notifyItemRangeChanged(headerView == null ? positionStart + 1 : positionStart + 2, itemCount);
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+            mWrapAdapter.notifyItemRangeChanged(headerView == null ? positionStart + 1 : positionStart + 2, itemCount, payload);
         }
     }
 

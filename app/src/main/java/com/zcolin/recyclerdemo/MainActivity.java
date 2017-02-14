@@ -82,6 +82,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        recyclerView.setOnItemLongClickListener(new BaseRecyclerAdapter.OnItemLongClickListener<String>() {
+            @Override
+            public boolean onItemLongClick(View covertView, int position, String data) {
+                recyclerAdapter.getDatas()
+                               .remove(position);
+                recyclerAdapter.notifyItemRemoved(position);
+                recyclerAdapter.notifyItemRangeChanged(position, recyclerAdapter.getDatas()
+                                                                                .size() - position);
+                return true;
+            }
+        });
 
 
         // recyclerView.setIsShowNoMore(false);//不显示《已加载全部》
