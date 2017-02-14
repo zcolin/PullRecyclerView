@@ -52,7 +52,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     private boolean isRefreshEnabled  = true;    //设置下拉刷新是否可用
     private boolean isLoadMoreEnabled = true;    //设置到底加载是否可用
     private float   dragRate          = 2;//下拉刷新滑动阻力系数，越大需要手指下拉的距离越大才能刷新
-    private BaseRecyclerAdapter.OnItemClickListener itemClickListener;
+    private BaseRecyclerAdapter.OnItemClickListener     itemClickListener;
     private BaseRecyclerAdapter.OnItemLongClickListener itemLongClickListener;
 
     private boolean isNoMore      = false;   //是否已没有更多
@@ -638,7 +638,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     private class DataObserver extends AdapterDataObserver {
         @Override
         public void onChanged() {
-            if (mWrapAdapter != null && mEmptyViewContainer != null) {
+            if (mEmptyViewContainer != null) {
                 if (mWrapAdapter.getAdapter()
                                 .getItemCount() == 0) {
                     mEmptyViewContainer.setVisibility(View.VISIBLE);
@@ -657,12 +657,12 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
 
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemInserted(headerView == null ? positionStart + 1 : positionStart + 2);
+            mWrapAdapter.notifyItemRangeInserted(headerView == null ? positionStart + 1 : positionStart + 2, itemCount);
         }
 
         @Override
         public void onItemRangeRemoved(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRemoved(headerView == null ? positionStart + 1 : positionStart + 2);
+            mWrapAdapter.notifyItemRangeRemoved(headerView == null ? positionStart + 1 : positionStart + 2, itemCount);
         }
 
         @Override
