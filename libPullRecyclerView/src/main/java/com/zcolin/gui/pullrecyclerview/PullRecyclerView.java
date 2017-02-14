@@ -182,7 +182,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
 
     public PullRecyclerView setHeaderView(Context context, int headerViewLayoutId) {
         return setHeaderView(LayoutInflater.from(context)
-                                    .inflate(headerViewLayoutId, null));
+                                           .inflate(headerViewLayoutId, null));
     }
 
     public PullRecyclerView setFooterView(View footerView) {
@@ -194,7 +194,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
 
     public PullRecyclerView setFooterView(Context context, int footerViewLayoutId) {
         return setFooterView(LayoutInflater.from(context)
-                                    .inflate(footerViewLayoutId, null));
+                                           .inflate(footerViewLayoutId, null));
     }
 
     /**
@@ -314,7 +314,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
         if (group == null) {
             group = new RelativeLayout(getContext());
             group.addView(container, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        }else{
+        } else {
             int index = group.indexOfChild(this);
             group.removeView(this);
             group.addView(container, index, getLayoutParams());
@@ -450,9 +450,15 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
             loadMoreFooter.onComplete();
         }
     }
-    
+
     @Override
     public void setAdapter(Adapter adapter) {
+        if (mWrapAdapter != null && mWrapAdapter.getAdapter() != null && hasRegisterEmptyObserver) {
+            mWrapAdapter.getAdapter()
+                        .unregisterAdapterDataObserver(mEmptyDataObserver);
+            hasRegisterEmptyObserver = false;
+        }
+
         mWrapAdapter = new WrapperRecyclerAdapter(adapter);
         mWrapAdapter.setHeaderView(headerView)
                     .setFooterView(footerView)
@@ -464,7 +470,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
 
         setOnItemClickListener(itemClickListener);
         if (!hasRegisterEmptyObserver) {
-            mWrapAdapter.registerAdapterDataObserver(mEmptyDataObserver);
+            adapter.registerAdapterDataObserver(mEmptyDataObserver);
             hasRegisterEmptyObserver = true;
         }
     }
@@ -628,36 +634,35 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
                     mEmptyViewContainer.setVisibility(View.GONE);
                 }
             }
+
+            if (mWrapAdapter != null) {
+                mWrapAdapter.notifyDataSetChanged();
+            }
         }
 
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount) {
-            mWrapAdapter.getAdapter()
-                        .notifyItemRangeInserted(positionStart, itemCount);
+            mWrapAdapter.notifyItemRangeInserted(positionStart, itemCount);
         }
 
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount) {
-            mWrapAdapter.getAdapter()
-                        .notifyItemRangeChanged(positionStart, itemCount);
+            mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount);
         }
 
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-            mWrapAdapter.getAdapter()
-                        .notifyItemRangeChanged(positionStart, itemCount, payload);
+            mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount, payload);
         }
 
         @Override
         public void onItemRangeRemoved(int positionStart, int itemCount) {
-            mWrapAdapter.getAdapter()
-                        .notifyItemRangeRemoved(positionStart, itemCount);
+            mWrapAdapter.notifyItemRangeRemoved(positionStart, itemCount);
         }
 
         @Override
         public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-            mWrapAdapter.getAdapter()
-                        .notifyItemMoved(fromPosition, toPosition);
+            mWrapAdapter.notifyItemMoved(fromPosition, toPosition);
         }
     }
 
