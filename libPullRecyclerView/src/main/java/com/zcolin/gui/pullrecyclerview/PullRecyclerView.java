@@ -613,9 +613,9 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
         }
 
         /*设置emptyView的监听者*/
-        Adapter<?> adapter = getAdapter();
-        if (adapter != null && !hasRegisterEmptyObserver && mEmptyDataObserver != null) {
-            adapter.registerAdapterDataObserver(mEmptyDataObserver);
+        if (mWrapAdapter != null && mWrapAdapter.getAdapter() != null && !hasRegisterEmptyObserver && mEmptyDataObserver != null) {
+            mWrapAdapter.getAdapter()
+                        .registerAdapterDataObserver(mEmptyDataObserver);
             hasRegisterEmptyObserver = true;
         }
     }
@@ -625,9 +625,9 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
         super.onDetachedFromWindow();
         
         /*注销监听者*/
-        Adapter<?> adapter = getAdapter();
-        if (adapter != null && hasRegisterEmptyObserver) {
-            adapter.unregisterAdapterDataObserver(mEmptyDataObserver);
+        if (mWrapAdapter != null && mWrapAdapter.getAdapter() != null && hasRegisterEmptyObserver) {
+            mWrapAdapter.getAdapter()
+                        .unregisterAdapterDataObserver(mEmptyDataObserver);
             hasRegisterEmptyObserver = false;
         }
     }
