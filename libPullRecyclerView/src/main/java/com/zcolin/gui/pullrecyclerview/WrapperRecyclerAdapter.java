@@ -177,7 +177,7 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         int realPosition = getRealPosition(position);
         if (realPosition >= 0 && realPosition < adapter.getItemCount()) {
             if (isReservedItemType(adapter.getItemViewType(realPosition))) {
-                throw new IllegalStateException("XRecyclerView require itemViewType in adapter should be less than 10000 ");
+                throw new IllegalStateException("PullRecyclerView require itemViewType in adapter should be less than 10000 ");
             }
 
             return adapter.getItemViewType(realPosition);
@@ -239,7 +239,15 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    return isReservedItemType(getItemViewType(position)) ? gridManager.getSpanCount() : 1;
+                    int fullCount = gridManager.getSpanCount();
+                    if (isReservedItemType(getItemViewType(position))) {
+                        return fullCount;
+                    } else if (adapter instanceof BaseRecyclerAdapter) {
+                        int count = ((BaseRecyclerAdapter) adapter).getGridItemSpanCount(getRealPosition(position), getItemViewType(position));
+                        count = (count == 0 || count > fullCount) ? fullCount : count;
+                        return count;
+                    }
+                    return 1;
                 }
             });
         }
@@ -261,10 +269,12 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         super.onViewAttachedToWindow(holder);
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
         int position = holder.getLayoutPosition();
-        if (lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams
-                && isReservedItemType(getItemViewType(position))) {
-            StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
-            p.setFullSpan(true);
+        if (lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams) {
+            if (isReservedItemType(getItemViewType(position)) ||
+                    (adapter instanceof BaseRecyclerAdapter && ((BaseRecyclerAdapter) adapter).getIsStaggeredItemFullSpan(getRealPosition(position), getItemViewType(position)))) {
+                StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
+                p.setFullSpan(true);
+            }
         }
         adapter.onViewAttachedToWindow(holder);
     }
@@ -274,7 +284,7 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         super.onViewDetachedFromWindow(holder);
 
         int position = holder.getAdapterPosition();
-        if (null == adapter || isHeaderView(position) || isFooterView(position)) {
+        if (isHeaderView(position) || isFooterView(position)) {
             return;
         }
 
@@ -286,7 +296,7 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         super.onViewRecycled(holder);
 
         int position = holder.getAdapterPosition();
-        if (null == adapter || isHeaderView(position) || isFooterView(position)) {
+        if (isHeaderView(position) || isFooterView(position)) {
             return;
         }
 

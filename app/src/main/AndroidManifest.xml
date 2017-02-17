@@ -28,6 +28,7 @@
         <activity android:name=".StaggeredGridLayoutActivity"/>
         <activity android:name=".DecorationActivity"/>
         <activity android:name=".SwipeMenuLayoutActivity"/>
+        <activity android:name=".MultiTypeLayoutActivity"/>
     </application>
 
 </manifest>

@@ -74,9 +74,12 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, StaggeredGridLayoutActivity.class);
                     startActivity(intent);
                 } else if (position == 6) {
-                    Intent intent = new Intent(MainActivity.this, DecorationActivity.class);
+                    Intent intent = new Intent(MainActivity.this, MultiTypeLayoutActivity.class);
                     startActivity(intent);
                 } else if (position == 7) {
+                    Intent intent = new Intent(MainActivity.this, DecorationActivity.class);
+                    startActivity(intent);
+                } else if (position == 8) {
                     Intent intent = new Intent(MainActivity.this, SwipeMenuLayoutActivity.class);
                     startActivity(intent);
                 }
@@ -162,8 +165,10 @@ public class MainActivity extends AppCompatActivity {
             } else if (i == 5) {
                 dataList.add("StaggeredGridLayout");
             } else if (i == 6) {
-                dataList.add("Decoration");
+                dataList.add("MultiTypeLayout");
             } else if (i == 7) {
+                dataList.add("Decoration");
+            } else if (i == 8) {
                 dataList.add("SwipeMenuLayout");
             } else {
                 dataList.add(String.format("第%d条数据", i));
@@ -177,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
         public void onRefresh() {
             mPage = 1;
             requestData(mPage);
+            recyclerView.setNoMore(false);
         }
 
         @Override

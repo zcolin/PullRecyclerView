@@ -54,6 +54,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     private float   dragRate          = 2;//下拉刷新滑动阻力系数，越大需要手指下拉的距离越大才能刷新
     private BaseRecyclerAdapter.OnItemClickListener     itemClickListener;
     private BaseRecyclerAdapter.OnItemLongClickListener itemLongClickListener;
+    private long minClickIntervaltime = 100; //ITEM点击的最小间隔
 
     private boolean isNoMore      = false;   //是否已没有更多
     private boolean isLoadingData = false;   //是否正在加载数据
@@ -122,9 +123,26 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
             if (mWrapAdapter.getAdapter() instanceof BaseRecyclerAdapter) {
                 ((BaseRecyclerAdapter) mWrapAdapter.getAdapter()).setOnItemLongClickListener(li);
             } else {
-                throw new IllegalArgumentException("adapter 必须继承BaseRecyclerAdapter 才能使用setOnItemClickListener");
+                throw new IllegalArgumentException("adapter 必须继承BaseRecyclerAdapter setOnItemLongClickListener");
             }
         }
+    }
+
+    /**
+     * 设置Item点击的最小间隔
+     *
+     * @param minClickIntervaltime millionSeconds
+     */
+    public PullRecyclerView setItemMinClickIntervalTime(long minClickIntervaltime) {
+        this.minClickIntervaltime = minClickIntervaltime;
+        if (mWrapAdapter != null) {
+            if (mWrapAdapter.getAdapter() instanceof BaseRecyclerAdapter) {
+                ((BaseRecyclerAdapter) mWrapAdapter.getAdapter()).setItemMinClickIntervalTime(minClickIntervaltime);
+            } else {
+                throw new IllegalArgumentException("adapter 必须继承BaseRecyclerAdapter 才能使用setItemMinClickIntervalTime");
+            }
+        }
+        return this;
     }
 
     /**

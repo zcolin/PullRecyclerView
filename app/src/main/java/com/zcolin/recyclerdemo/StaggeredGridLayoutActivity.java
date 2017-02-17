@@ -116,6 +116,7 @@ public class StaggeredGridLayoutActivity extends AppCompatActivity {
         public void onRefresh() {
             mPage = 1;
             requestData(mPage);
+            recyclerView.setNoMore(false);
         }
 
         @Override
