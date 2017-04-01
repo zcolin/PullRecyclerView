@@ -208,14 +208,22 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      * 获取设置的HeaderView的外层LinearLayout
      */
     public View getHeaderLayout() {
-        return mWrapAdapter.getHeaderLayout();
+        if (mWrapAdapter == null) {
+            return null;
+        } else {
+            return mWrapAdapter.getHeaderLayout();
+        }
     }
 
     /**
      * 获取设置的FooterView的外层LinearLayout
      */
     public View getFooterLayout() {
-        return mWrapAdapter.getFooterLayout();
+        if (mWrapAdapter == null) {
+            return null;
+        } else {
+            return mWrapAdapter.getFooterLayout();
+        }
     }
 
     /**
@@ -292,7 +300,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
             if (listFooterView == null) {
                 listFooterView = new ArrayList<>();
             }
-            
+
             index = index < 0 ? listFooterView.size() : index;
             index = index > listFooterView.size() ? listFooterView.size() : index;
             footerView.setTag(R.id.srv_reserved_ivew, "reservedView");
@@ -795,7 +803,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
 
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeInserted(mWrapAdapter.getHeaderLayout() == null  ? positionStart + 1 : positionStart + 2, itemCount);
+            mWrapAdapter.notifyItemRangeInserted(mWrapAdapter.getHeaderLayout() == null ? positionStart + 1 : positionStart + 2, itemCount);
         }
 
         @Override
