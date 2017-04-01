@@ -321,8 +321,10 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     }
 
     public PullRecyclerView removeAllHeaderView() {
-        listHeaderView.clear();
-        listHeaderView = null;
+        if (listHeaderView != null) {
+            listHeaderView.clear();
+            listHeaderView = null;
+        }
 
         if (mWrapAdapter != null) {
             mWrapAdapter.removeAllHeaderView();
@@ -345,8 +347,10 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     }
 
     public PullRecyclerView removeAllFooterView() {
-        listFooterView.clear();
-        listFooterView = null;
+        if (listFooterView != null) {
+            listFooterView.clear();
+            listFooterView = null;
+        }
 
         if (mWrapAdapter != null) {
             mWrapAdapter.removeAllFooterView();
