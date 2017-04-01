@@ -244,11 +244,11 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      * 设置自定义的HeaderView
      */
     public PullRecyclerView addHeaderView(View headerView, int index) {
-        if (listHeaderView == null) {
-            listHeaderView = new ArrayList<>();
-        }
-
         if (headerView != null) {
+            if (listHeaderView == null) {
+                listHeaderView = new ArrayList<>();
+            }
+
             index = index < 0 ? listHeaderView.size() : index;
             index = index > listHeaderView.size() ? listHeaderView.size() : index;
             headerView.setTag(R.id.srv_reserved_ivew, "reservedView");
@@ -288,11 +288,11 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      * 设置自定义的FooterView
      */
     public PullRecyclerView addFooterView(View footerView, int index) {
-        if (listFooterView == null) {
-            listFooterView = new ArrayList<>();
-        }
-
         if (footerView != null) {
+            if (listFooterView == null) {
+                listFooterView = new ArrayList<>();
+            }
+            
             index = index < 0 ? listFooterView.size() : index;
             index = index > listFooterView.size() ? listFooterView.size() : index;
             footerView.setTag(R.id.srv_reserved_ivew, "reservedView");
