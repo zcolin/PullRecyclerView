@@ -41,8 +41,8 @@ public class GridLayoutActivity extends AppCompatActivity {
         recyclerView.setEmptyView(this, R.layout.view_recycler_empty);
         
         //设置HeaderView和footerView
-        recyclerView.setHeaderView(this, R.layout.view_recyclerheader);
-        recyclerView.setFooterView(this, R.layout.view_recyclerfooter);
+        recyclerView.addHeaderView(this, R.layout.view_recyclerheader);
+        recyclerView.addFooterView(this, R.layout.view_recyclerfooter);
 
         //下拉和到底加载的进度条样式，默认为 ProgressStyle.BallSpinFadeLoaderIndicator
         recyclerView.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);

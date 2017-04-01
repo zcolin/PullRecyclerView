@@ -32,8 +32,8 @@ public class DecorationActivity extends AppCompatActivity {
         recyclerView = (PullRecyclerView) findViewById(R.id.recycler_view);
         recyclerView.addDefaultItemDecoration();
         //设置HeaderView和footerView
-        recyclerView.setHeaderView(this, R.layout.view_recyclerheader);
-        recyclerView.setFooterView(this, R.layout.view_recyclerfooter);
+        recyclerView.addHeaderView(this, R.layout.view_recyclerheader);
+        recyclerView.addFooterView(this, R.layout.view_recyclerfooter);
 
         recyclerView.setIsShowNoMore(false);
         recyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());

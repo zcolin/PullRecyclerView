@@ -60,8 +60,9 @@ recyclerView.setOnPullLoadMoreListener(new PullRecyclerView.PullLoadMoreListener
 recyclerView.setEmptyView(this, R.layout.view_recycler_empty);
 
 //设置HeaderView和footerView
-recyclerView.setHeaderView(this, R.layout.view_recyclerheader);
-recyclerView.setFooterView(this, R.layout.view_recyclerfooter);
+recyclerView.addHeaderView(this, R.layout.view_recyclerheader);
+recyclerView.addFooterView(this, R.layout.view_recyclerfooter);
+// recyclerView.removeHeaderView(View)
 
 //设置下拉刷新进度条样式
 recyclerView.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
