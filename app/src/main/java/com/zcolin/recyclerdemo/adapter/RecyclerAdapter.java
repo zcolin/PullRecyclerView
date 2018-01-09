@@ -1,13 +1,12 @@
 /*
  * *********************************************************
  *   author   colin
- *   company  fosung
+ *   company  telchina
  *   email    wanglin2046@126.com
- *   date     16-12-20 下午1:06
+ *   date     18-1-9 下午3:05
  * ********************************************************
  */
 package com.zcolin.recyclerdemo.adapter;
-
 
 import android.widget.ImageView;
 import android.widget.TextView;

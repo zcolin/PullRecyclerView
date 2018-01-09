@@ -1,10 +1,10 @@
 /*
- * **********************************************************
- *   author   colin
- *   company  fosung
- *   email    wanglin2046@126.com
- *   date     16-10-11 下午3:33
  * *********************************************************
+ *   author   colin
+ *   company  telchina
+ *   email    wanglin2046@126.com
+ *   date     18-1-9 下午3:05
+ * ********************************************************
  */
 
 package com.zcolin.gui.pullrecyclerview;
@@ -43,6 +43,7 @@ public abstract class AppBarStateChangeListener implements AppBarLayout.OnOffset
             mCurrentState = State.IDLE;
         }
     }
+
     public abstract void onStateChanged(AppBarLayout appBarLayout, State state);
 }
 

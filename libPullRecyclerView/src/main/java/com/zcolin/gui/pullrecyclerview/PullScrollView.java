@@ -1,9 +1,9 @@
 /*
  * *********************************************************
  *   author   colin
- *   company  fosung
+ *   company  telchina
  *   email    wanglin2046@126.com
- *   date     16-12-16 下午4:28
+ *   date     18-1-9 下午3:05
  * ********************************************************
  */
 
@@ -72,7 +72,8 @@ public class PullScrollView extends ScrollView {
             int index = group.indexOfChild(this);
             group.removeView(this);
             group.addView(container, index, getLayoutParams());
-            container.addView(refreshHeader.getHeaderView(), new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            container.addView(refreshHeader.getHeaderView(), new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams
+                    .WRAP_CONTENT));
             container.addView(this, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
     }
@@ -180,8 +181,7 @@ public class PullScrollView extends ScrollView {
             isRefreshing = true;
             refreshHeader.onRefreshing();
 
-            int offSet = refreshHeader.getHeaderView()
-                                      .getMeasuredHeight();
+            int offSet = refreshHeader.getHeaderView().getMeasuredHeight();
             refreshHeader.onMove(offSet, offSet);
         }
     }

@@ -1,9 +1,9 @@
 /*
  * *********************************************************
  *   author   colin
- *   company  fosung
+ *   company  telchina
  *   email    wanglin2046@126.com
- *   date     16-12-20 下午1:03
+ *   date     18-1-9 下午3:05
  * ********************************************************
  */
 
@@ -13,7 +13,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -36,19 +35,13 @@ public class SwipeMenuLayoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipemenu);
 
-        recyclerView = (PullSwipeMenuRecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
         recyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayout.HORIZONTAL, 1, Color.GREEN));
-        recyclerView.getLoadMoreFooterView()
-                    .setBackgroundColor(Color.BLUE);
-        recyclerView.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener<String>() {
-            @Override
-            public void onItemClick(View covertView, int position, String data) {
-                Toast.makeText(SwipeMenuLayoutActivity.this, data, Toast.LENGTH_SHORT)
-                     .show();
-
-            }
-        });
+        recyclerView.getLoadMoreFooterView().setBackgroundColor(Color.BLUE);
+        recyclerView.setOnItemClickListener((BaseRecyclerAdapter.OnItemClickListener<String>) (covertView, position, data) -> Toast.makeText
+                (SwipeMenuLayoutActivity.this, data, Toast.LENGTH_SHORT)
+                                                                                                                                   .show());
 
         recyclerView.refreshWithPull();
     }
@@ -75,14 +68,11 @@ public class SwipeMenuLayoutActivity extends AppCompatActivity {
      * 模仿从网络请求数据
      */
     public void requestData(final int page) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                notifyData(setList(page), page == 1);
-                recyclerView.setPullLoadMoreCompleted();
-                if (page == 2) {
-                    recyclerView.setNoMore(true);
-                }
+        new Handler().postDelayed(() -> {
+            notifyData(setList(page), page == 1);
+            recyclerView.setPullLoadMoreCompleted();
+            if (page == 2) {
+                recyclerView.setNoMore(true);
             }
         }, 1000);
     }

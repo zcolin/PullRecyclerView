@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ **********************************************************
+  ~   author   colin
+  ~   company  telchina
+  ~   email    wanglin2046@126.com
+  ~   date     18-1-9 下午2:59
+  ~ *********************************************************
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="bottom" >
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:gravity="bottom">
 
     <RelativeLayout
         android:id="@+id/listview_header_content"
@@ -24,25 +33,25 @@
                 android:id="@+id/refresh_status_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="下拉刷新" />
+                android:text="下拉刷新"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
-                android:layout_marginTop="3dp" >
+                android:layout_marginTop="3dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="上次更新时间:"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/last_refresh_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -54,7 +63,7 @@
             android:layout_marginLeft="35dp"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/listview_header_text"
-            android:src="@drawable/gui_ic_pullrecyclerview_pulltorefresh_arrow" />
+            android:src="@drawable/gui_ic_pullrecyclerview_pulltorefresh_arrow"/>
 
         <com.zcolin.gui.pullrecyclerview.progressindicator.SimpleViewSwitcher
             android:id="@+id/listview_header_progressbar"
@@ -64,7 +73,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="10dp"
-            android:visibility="invisible" />
+            android:visibility="invisible"/>
     </RelativeLayout>
 
 </LinearLayout>

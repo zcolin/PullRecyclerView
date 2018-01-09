@@ -1,9 +1,9 @@
 /*
  * *********************************************************
  *   author   colin
- *   company  fosung
+ *   company  telchina
  *   email    wanglin2046@126.com
- *   date     16-12-15 下午1:47
+ *   date     18-1-9 下午3:05
  * ********************************************************
  */
 
@@ -71,28 +71,25 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
         this.setLayoutParams(lp);
         this.setPadding(0, 0, 0, 0);
 
-        mContainer = (LinearLayout) LayoutInflater.from(getContext())
-                                                  .inflate(R.layout.gui_pullrecyclerview_header, null);
+        mContainer = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.gui_pullrecyclerview_header, null);
         addView(mContainer, new LayoutParams(LayoutParams.MATCH_PARENT, 0));
         setGravity(Gravity.BOTTOM);
 
-        mArrowImageView = (ImageView) findViewById(R.id.listview_header_arrow);
-        mStatusTextView = (TextView) findViewById(R.id.refresh_status_textview);
+        mArrowImageView = findViewById(R.id.listview_header_arrow);
+        mStatusTextView = findViewById(R.id.refresh_status_textview);
 
-        mProgressBar = (SimpleViewSwitcher) findViewById(R.id.listview_header_progressbar);
+        mProgressBar = findViewById(R.id.listview_header_progressbar);
         setProgressStyle(ProgressStyle.BallSpinFadeLoaderIndicator);
 
-        mRotateUpAnim = new RotateAnimation(0.0f, -180.0f,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        mRotateUpAnim = new RotateAnimation(0.0f, -180.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         mRotateUpAnim.setDuration(ROTATE_ANIM_DURATION);
         mRotateUpAnim.setFillAfter(true);
 
-        mRotateDownAnim = new RotateAnimation(-180.0f, 0.0f,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        mRotateDownAnim = new RotateAnimation(-180.0f, 0.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         mRotateDownAnim.setDuration(ROTATE_ANIM_DURATION);
         mRotateDownAnim.setFillAfter(true);
 
-        mHeaderTimeView = (TextView) findViewById(R.id.last_refresh_time);
+        mHeaderTimeView = findViewById(R.id.last_refresh_time);
         measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mMeasuredHeight = getMeasuredHeight();
     }
@@ -112,7 +109,7 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
             mProgressBar.setView(progressView);
         }
     }
-    
+
     /**
      * 设置控件的不同状态的文字
      *
@@ -213,21 +210,14 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
         mArrowImageView.setVisibility(View.INVISIBLE);
         mProgressBar.setVisibility(View.INVISIBLE);
 
-        SharedPreferences pre = getContext().getApplicationContext()
-                                            .getSharedPreferences("pullrecyclerview", Context.MODE_PRIVATE);
+        SharedPreferences pre = getContext().getApplicationContext().getSharedPreferences("pullrecyclerview", Context.MODE_PRIVATE);
         mHeaderTimeView.setText(friendlyTime(pre.getLong("refresh_time", 0)));
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                reset();
-            }
-        }, 200);
+        new Handler().postDelayed(() -> reset(), 200);
         mStatusTextView.setText(strInfo4);
 
         //当前刷新时间存入到本地
         long timestamp = System.currentTimeMillis();
-        pre.edit()
-           .putLong("refresh_time", timestamp)
-           .apply();
+        pre.edit().putLong("refresh_time", timestamp).apply();
         mState = STATE_COMPLETE;
     }
 
@@ -236,11 +226,7 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
      */
     private void reset() {
         smoothScrollTo(0);
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                onReset();
-            }
-        }, 500);
+        new Handler().postDelayed(() -> onReset(), 500);
     }
 
     /**
@@ -248,14 +234,8 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
      */
     private void smoothScrollTo(int destHeight) {
         ValueAnimator animator = ValueAnimator.ofInt(getVisibleHeight(), destHeight);
-        animator.setDuration(300)
-                .start();
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                setVisibleHeight((int) animation.getAnimatedValue());
-            }
-        });
+        animator.setDuration(300).start();
+        animator.addUpdateListener(animation -> setVisibleHeight((int) animation.getAnimatedValue()));
         animator.start();
     }
 

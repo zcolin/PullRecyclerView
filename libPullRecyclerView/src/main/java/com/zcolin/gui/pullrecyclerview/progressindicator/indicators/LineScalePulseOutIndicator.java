@@ -1,3 +1,12 @@
+/*
+ * *********************************************************
+ *   author   colin
+ *   company  telchina
+ *   email    wanglin2046@126.com
+ *   date     18-1-9 下午3:05
+ * ********************************************************
+ */
+
 package com.zcolin.gui.pullrecyclerview.progressindicator.indicators;
 
 
@@ -12,20 +21,17 @@ public class LineScalePulseOutIndicator extends LineScaleIndicator {
 
     @Override
     public ArrayList<ValueAnimator> onCreateAnimators() {
-        ArrayList<ValueAnimator> animators=new ArrayList<>();
-        long[] delays=new long[]{500,250,0,250,500};
+        ArrayList<ValueAnimator> animators = new ArrayList<>();
+        long[] delays = new long[]{500, 250, 0, 250, 500};
         for (int i = 0; i < 5; i++) {
-            final int index=i;
-            ValueAnimator scaleAnim=ValueAnimator.ofFloat(1,0.3f,1);
+            final int index = i;
+            ValueAnimator scaleAnim = ValueAnimator.ofFloat(1, 0.3f, 1);
             scaleAnim.setDuration(900);
             scaleAnim.setRepeatCount(-1);
             scaleAnim.setStartDelay(delays[i]);
-            addUpdateListener(scaleAnim,new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    scaleYFloats[index] = (float) animation.getAnimatedValue();
-                    postInvalidate();
-                }
+            addUpdateListener(scaleAnim, animation -> {
+                scaleYFloats[index] = (float) animation.getAnimatedValue();
+                postInvalidate();
             });
             animators.add(scaleAnim);
         }

@@ -1,9 +1,9 @@
 /*
  * *********************************************************
  *   author   colin
- *   company  fosung
+ *   company  telchina
  *   email    wanglin2046@126.com
- *   date     16-12-16 下午3:40
+ *   date     18-1-9 下午3:05
  * ********************************************************
  */
 
@@ -24,22 +24,12 @@ public class TextViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_textview);
 
 
-        final PullScrollView refreshLayout = (PullScrollView) findViewById(R.id.refresh_layout);
+        final PullScrollView refreshLayout = findViewById(R.id.refresh_layout);
         // refreshLayout.setIsRefreshEnabled(false);
         // refreshLayout.setRefreshHeader(new DefRefreshHeader(this));
         // refreshLayout.getRefreshHeaderView().setBackgroundColor(Color.BLUE);
         refreshLayout.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
-        refreshLayout.setRefreshListener(new PullScrollView.RefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshLayout.setRefreshCompleted();
-                    }
-                }, 1000);
-            }
-        });
+        refreshLayout.setRefreshListener(() -> new Handler().postDelayed(() -> refreshLayout.setRefreshCompleted(), 1000));
 
         refreshLayout.refreshWithPull();
     }

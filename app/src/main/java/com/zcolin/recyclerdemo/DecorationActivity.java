@@ -1,9 +1,9 @@
 /*
  * *********************************************************
  *   author   colin
- *   company  fosung
+ *   company  telchina
  *   email    wanglin2046@126.com
- *   date     16-12-20 上午9:33
+ *   date     18-1-9 下午3:05
  * ********************************************************
  */
 
@@ -29,7 +29,7 @@ public class DecorationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (PullRecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         recyclerView.addDefaultItemDecoration();
         //设置HeaderView和footerView
         recyclerView.addHeaderView(this, R.layout.view_recyclerheader);
@@ -37,7 +37,7 @@ public class DecorationActivity extends AppCompatActivity {
 
         recyclerView.setIsShowNoMore(false);
         recyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
-        notifyData(new ArrayList<String>(), false);
+        notifyData(new ArrayList<>(), false);
         recyclerView.refreshWithPull();     //有下拉效果的数据刷新
     }
 
@@ -63,14 +63,11 @@ public class DecorationActivity extends AppCompatActivity {
      * 模仿从网络请求数据
      */
     public void requestData(final int page) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                notifyData(setList(page), page == 1);
-                recyclerView.setPullLoadMoreCompleted();
-                if (page == 2) {
-                    recyclerView.setNoMore(true);
-                }
+        new Handler().postDelayed(() -> {
+            notifyData(setList(page), page == 1);
+            recyclerView.setPullLoadMoreCompleted();
+            if (page == 2) {
+                recyclerView.setNoMore(true);
             }
         }, 1000);
     }

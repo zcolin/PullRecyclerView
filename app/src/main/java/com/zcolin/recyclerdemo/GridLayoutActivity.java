@@ -1,9 +1,9 @@
 /*
  * *********************************************************
  *   author   colin
- *   company  fosung
+ *   company  telchina
  *   email    wanglin2046@126.com
- *   date     16-12-19 下午4:58
+ *   date     18-1-9 下午3:05
  * ********************************************************
  */
 
@@ -12,7 +12,6 @@ package com.zcolin.recyclerdemo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Toast;
 
 import com.zcolin.gui.pullrecyclerview.BaseRecyclerAdapter;
@@ -33,13 +32,13 @@ public class GridLayoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (PullRecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setGridLayout(false, 2);//默认为LinearLayoutManager
         recyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
-        
+
         //设置数据为空时的EmptyView，DataObserver是注册在adapter之上的，也就是setAdapter是注册上，notifyDataSetChanged的时候才会生效
         recyclerView.setEmptyView(this, R.layout.view_recycler_empty);
-        
+
         //设置HeaderView和footerView
         recyclerView.addHeaderView(this, R.layout.view_recyclerheader);
         recyclerView.addFooterView(this, R.layout.view_recyclerfooter);
@@ -47,19 +46,15 @@ public class GridLayoutActivity extends AppCompatActivity {
         //下拉和到底加载的进度条样式，默认为 ProgressStyle.BallSpinFadeLoaderIndicator
         recyclerView.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
         recyclerView.setLoadMoreProgressStyle(ProgressStyle.LineScaleIndicator);
-        
-        recyclerView.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener<String>() {
-            @Override
-            public void onItemClick(View covertView, int position, String data) {
-                Toast.makeText(GridLayoutActivity.this, data, Toast.LENGTH_SHORT)
-                     .show();
-            }
-        });
+
+        recyclerView.setOnItemClickListener((BaseRecyclerAdapter.OnItemClickListener<String>) (covertView, position, data) -> Toast.makeText
+                (GridLayoutActivity.this, data, Toast.LENGTH_SHORT)
+                                                                                                                                   .show());
 
         //recyclerView.setIsShowNoMore(false);     //不显示已加载全部
         //recyclerView.setIsLoadMoreEnabled(false);//到底加载是否可用
         //recyclerView.setIsRefreshEnabled(false); //下拉刷新是否可用
-        notifyData(new ArrayList<String>(), false);//绑定Adapter
+        notifyData(new ArrayList<>(), false);//绑定Adapter
 
         recyclerView.refreshWithPull();     //有下拉效果的数据刷新
         // recyclerView.refresh();          //没有下拉刷新效果，直接刷新数据
@@ -88,14 +83,11 @@ public class GridLayoutActivity extends AppCompatActivity {
      * 模仿从网络请求数据
      */
     public void requestData(final int page) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                notifyData(setList(page), page == 1);
-                recyclerView.setPullLoadMoreCompleted();
-                if (page == 2) {
-                    recyclerView.setNoMore(true);
-                }
+        new Handler().postDelayed(() -> {
+            notifyData(setList(page), page == 1);
+            recyclerView.setPullLoadMoreCompleted();
+            if (page == 2) {
+                recyclerView.setNoMore(true);
             }
         }, 1000);
     }

@@ -1,3 +1,12 @@
+/*
+ * *********************************************************
+ *   author   colin
+ *   company  telchina
+ *   email    wanglin2046@126.com
+ *   date     18-1-9 下午3:05
+ * ********************************************************
+ */
+
 package com.zcolin.gui.pullrecyclerview.progressindicator;
 
 import android.annotation.TargetApi;
@@ -36,25 +45,17 @@ public class AVLoadingIndicatorView extends View {
 
     private boolean mDismissed = false;
 
-    private final Runnable mDelayedHide = new Runnable() {
-
-        @Override
-        public void run() {
-            mPostedHide = false;
-            mStartTime = -1;
-            setVisibility(View.GONE);
-        }
+    private final Runnable mDelayedHide = () -> {
+        mPostedHide = false;
+        mStartTime = -1;
+        setVisibility(View.GONE);
     };
 
-    private final Runnable mDelayedShow = new Runnable() {
-
-        @Override
-        public void run() {
-            mPostedShow = false;
-            if (!mDismissed) {
-                mStartTime = System.currentTimeMillis();
-                setVisibility(View.VISIBLE);
-            }
+    private final Runnable mDelayedShow = () -> {
+        mPostedShow = false;
+        if (!mDismissed) {
+            mStartTime = System.currentTimeMillis();
+            setVisibility(View.VISIBLE);
         }
     };
 
@@ -95,8 +96,7 @@ public class AVLoadingIndicatorView extends View {
         mMinHeight = 24;
         mMaxHeight = 48;
 
-        final TypedArray a = context.obtainStyledAttributes(
-                attrs, R.styleable.AVLoadingIndicatorView, defStyleAttr, defStyleRes);
+        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AVLoadingIndicatorView, defStyleAttr, defStyleRes);
 
         mMinWidth = a.getDimensionPixelSize(R.styleable.AVLoadingIndicatorView_minWidth, mMinWidth);
         mMaxWidth = a.getDimensionPixelSize(R.styleable.AVLoadingIndicatorView_maxWidth, mMaxWidth);
@@ -165,11 +165,8 @@ public class AVLoadingIndicatorView extends View {
         }
         StringBuilder drawableClassName = new StringBuilder();
         if (!indicatorName.contains(".")) {
-            String defaultPackageName = getClass().getPackage()
-                                                  .getName();
-            drawableClassName.append(defaultPackageName)
-                             .append(".indicators")
-                             .append(".");
+            String defaultPackageName = getClass().getPackage().getName();
+            drawableClassName.append(defaultPackageName).append(".indicators").append(".");
         }
         drawableClassName.append(indicatorName);
         try {
@@ -228,8 +225,7 @@ public class AVLoadingIndicatorView extends View {
 
     @Override
     protected boolean verifyDrawable(Drawable who) {
-        return who == mIndicator
-                || super.verifyDrawable(who);
+        return who == mIndicator || super.verifyDrawable(who);
     }
 
     void startAnimation() {
@@ -280,8 +276,7 @@ public class AVLoadingIndicatorView extends View {
             final int scrollX = getScrollX() + getPaddingLeft();
             final int scrollY = getScrollY() + getPaddingTop();
 
-            invalidate(dirty.left + scrollX, dirty.top + scrollY,
-                    dirty.right + scrollX, dirty.bottom + scrollY);
+            invalidate(dirty.left + scrollX, dirty.top + scrollY, dirty.right + scrollX, dirty.bottom + scrollY);
         } else {
             super.invalidateDrawable(dr);
         }

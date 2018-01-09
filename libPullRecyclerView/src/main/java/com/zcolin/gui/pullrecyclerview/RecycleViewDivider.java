@@ -1,9 +1,9 @@
 /*
  * *********************************************************
  *   author   colin
- *   company  fosung
+ *   company  telchina
  *   email    wanglin2046@126.com
- *   date     16-12-20 上午9:28
+ *   date     18-1-9 下午3:05
  * ********************************************************
  */
 
@@ -105,7 +105,7 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
                     continue;
                 }
             }
-            
+
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int top = child.getBottom() + layoutParams.bottomMargin;
             final int bottom = top + mDividerHeight;

@@ -1,3 +1,12 @@
+/*
+ * *********************************************************
+ *   author   colin
+ *   company  telchina
+ *   email    wanglin2046@126.com
+ *   date     18-1-9 下午3:05
+ * ********************************************************
+ */
+
 package com.zcolin.gui.pullrecyclerview.progressindicator.indicators;
 
 import android.animation.ValueAnimator;
@@ -12,7 +21,7 @@ import java.util.ArrayList;
  */
 public class BallTrianglePathIndicator extends Indicator {
 
-    float[] translateX=new float[3],translateY=new float[3];
+    float[] translateX = new float[3], translateY = new float[3];
 
     @Override
     public void draw(Canvas canvas, Paint paint) {
@@ -28,44 +37,38 @@ public class BallTrianglePathIndicator extends Indicator {
 
     @Override
     public ArrayList<ValueAnimator> onCreateAnimators() {
-        ArrayList<ValueAnimator> animators=new ArrayList<>();
-        float startX=getWidth()/5;
-        float startY=getWidth()/5;
+        ArrayList<ValueAnimator> animators = new ArrayList<>();
+        float startX = getWidth() / 5;
+        float startY = getWidth() / 5;
         for (int i = 0; i < 3; i++) {
-            final int index=i;
-            ValueAnimator translateXAnim=ValueAnimator.ofFloat(getWidth()/2,getWidth()-startX,startX,getWidth()/2);
-            if (i==1){
-                translateXAnim=ValueAnimator.ofFloat(getWidth()-startX,startX,getWidth()/2,getWidth()-startX);
-            }else if (i==2){
-                translateXAnim=ValueAnimator.ofFloat(startX,getWidth()/2,getWidth()-startX,startX);
+            final int index = i;
+            ValueAnimator translateXAnim = ValueAnimator.ofFloat(getWidth() / 2, getWidth() - startX, startX, getWidth() / 2);
+            if (i == 1) {
+                translateXAnim = ValueAnimator.ofFloat(getWidth() - startX, startX, getWidth() / 2, getWidth() - startX);
+            } else if (i == 2) {
+                translateXAnim = ValueAnimator.ofFloat(startX, getWidth() / 2, getWidth() - startX, startX);
             }
-            ValueAnimator translateYAnim=ValueAnimator.ofFloat(startY,getHeight()-startY,getHeight()-startY,startY);
-            if (i==1){
-                translateYAnim=ValueAnimator.ofFloat(getHeight()-startY,getHeight()-startY,startY,getHeight()-startY);
-            }else if (i==2){
-                translateYAnim=ValueAnimator.ofFloat(getHeight()-startY,startY,getHeight()-startY,getHeight()-startY);
+            ValueAnimator translateYAnim = ValueAnimator.ofFloat(startY, getHeight() - startY, getHeight() - startY, startY);
+            if (i == 1) {
+                translateYAnim = ValueAnimator.ofFloat(getHeight() - startY, getHeight() - startY, startY, getHeight() - startY);
+            } else if (i == 2) {
+                translateYAnim = ValueAnimator.ofFloat(getHeight() - startY, startY, getHeight() - startY, getHeight() - startY);
             }
 
             translateXAnim.setDuration(2000);
             translateXAnim.setInterpolator(new LinearInterpolator());
-                translateXAnim.setRepeatCount(-1);
-            addUpdateListener(translateXAnim,new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    translateX [index]= (float) animation.getAnimatedValue();
-                    postInvalidate();
-                }
+            translateXAnim.setRepeatCount(-1);
+            addUpdateListener(translateXAnim, animation -> {
+                translateX[index] = (float) animation.getAnimatedValue();
+                postInvalidate();
             });
 
             translateYAnim.setDuration(2000);
             translateYAnim.setInterpolator(new LinearInterpolator());
             translateYAnim.setRepeatCount(-1);
-            addUpdateListener(translateYAnim,new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    translateY [index]= (float) animation.getAnimatedValue();
-                    postInvalidate();
-                }
+            addUpdateListener(translateYAnim, animation -> {
+                translateY[index] = (float) animation.getAnimatedValue();
+                postInvalidate();
             });
 
             animators.add(translateXAnim);

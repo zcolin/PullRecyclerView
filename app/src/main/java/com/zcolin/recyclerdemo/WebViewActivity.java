@@ -1,9 +1,9 @@
 /*
  * *********************************************************
  *   author   colin
- *   company  fosung
+ *   company  telchina
  *   email    wanglin2046@126.com
- *   date     16-12-16 下午4:51
+ *   date     18-1-9 下午3:05
  * ********************************************************
  */
 
@@ -27,8 +27,8 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_webview);
 
 
-        final PullScrollView refreshLayout = (PullScrollView) findViewById(R.id.refresh_layout);
-        final WebView webView = (WebView) findViewById(R.id.webview);
+        final PullScrollView refreshLayout = findViewById(R.id.refresh_layout);
+        final WebView webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
@@ -36,18 +36,10 @@ public class WebViewActivity extends AppCompatActivity {
         // refreshLayout.setRefreshHeader(new DefRefreshHeader(this));
         // refreshLayout.getRefreshHeaderView().setBackgroundColor(Color.BLUE);
         refreshLayout.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
-        refreshLayout.setRefreshListener(new PullScrollView.RefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        webView.loadUrl("http://www.sina.com.cn/");
-                        refreshLayout.setRefreshCompleted();
-                    }
-                }, 1000);
-            }
-        });
+        refreshLayout.setRefreshListener(() -> new Handler().postDelayed(() -> {
+            webView.loadUrl("http://www.sina.com.cn/");
+            refreshLayout.setRefreshCompleted();
+        }, 1000));
 
         refreshLayout.refreshWithPull();
     }

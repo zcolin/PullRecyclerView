@@ -1,10 +1,10 @@
 /*
- * **********************************************************
- *   author   colin
- *   company  fosung
- *   email    wanglin2046@126.com
- *   date     16-10-11 下午5:31
  * *********************************************************
+ *   author   colin
+ *   company  telchina
+ *   email    wanglin2046@126.com
+ *   date     18-1-9 下午3:05
+ * ********************************************************
  */
 
 package com.zcolin.gui.pullrecyclerview;
@@ -244,8 +244,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      * 设置自定义的HeaderView
      */
     public PullRecyclerView addHeaderView(Context context, int headerViewLayoutId, int index) {
-        return addHeaderView(LayoutInflater.from(context)
-                                           .inflate(headerViewLayoutId, null), index);
+        return addHeaderView(LayoutInflater.from(context).inflate(headerViewLayoutId, null), index);
     }
 
     /**
@@ -288,8 +287,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      * 设置自定义的FooterView
      */
     public PullRecyclerView addFooterView(Context context, int footerViewLayoutId, int index) {
-        return addFooterView(LayoutInflater.from(context)
-                                           .inflate(footerViewLayoutId, null), index);
+        return addFooterView(LayoutInflater.from(context).inflate(footerViewLayoutId, null), index);
     }
 
     /**
@@ -371,8 +369,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      */
     public PullRecyclerView setLoadMoreFooter(ILoadMoreFooter loadMoreFooter) {
         this.loadMoreFooter = loadMoreFooter;
-        this.loadMoreFooter.getFootView()
-                           .setTag("reservedView");
+        this.loadMoreFooter.getFootView().setTag("reservedView");
         return this;
     }
 
@@ -381,8 +378,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      */
     public PullRecyclerView setRefreshHeader(IRefreshHeader refreshHeader) {
         this.refreshHeader = refreshHeader;
-        this.refreshHeader.getHeaderView()
-                          .setTag("reservedView");
+        this.refreshHeader.getHeaderView().setTag("reservedView");
         return this;
     }
 
@@ -466,8 +462,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      * 设置没有数据的EmptyView
      */
     public PullRecyclerView setEmptyView(Context context, int layoutId) {
-        setEmptyView(LayoutInflater.from(context)
-                                   .inflate(layoutId, null));
+        setEmptyView(LayoutInflater.from(context).inflate(layoutId, null));
         return this;
     }
 
@@ -556,8 +551,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
             isRefreshing = true;
             refreshHeader.onRefreshing();
 
-            int offSet = refreshHeader.getHeaderView()
-                                      .getMeasuredHeight();
+            int offSet = refreshHeader.getHeaderView().getMeasuredHeight();
             refreshHeader.onMove(offSet, offSet);
         }
     }
@@ -623,16 +617,12 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     @Override
     public void setAdapter(Adapter adapter) {
         if (mWrapAdapter != null && mWrapAdapter.getAdapter() != null && hasRegisterEmptyObserver) {
-            mWrapAdapter.getAdapter()
-                        .unregisterAdapterDataObserver(mEmptyDataObserver);
+            mWrapAdapter.getAdapter().unregisterAdapterDataObserver(mEmptyDataObserver);
             hasRegisterEmptyObserver = false;
         }
 
         mWrapAdapter = new WrapperRecyclerAdapter(adapter);
-        mWrapAdapter.setRefreshHeader(refreshHeader)
-                    .setLoadMoreFooter(loadMoreFooter)
-                    .setIsShowNoMore(isShowNoMore)
-                    .setIsLoadMoreEnabled(isLoadMoreEnabled);
+        mWrapAdapter.setRefreshHeader(refreshHeader).setLoadMoreFooter(loadMoreFooter).setIsShowNoMore(isShowNoMore).setIsLoadMoreEnabled(isLoadMoreEnabled);
 
         if (!isAddHeader) {
             mWrapAdapter.setHeaderViews(listHeaderView);
@@ -654,8 +644,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     @Override
     public void onScrollStateChanged(int state) {
         super.onScrollStateChanged(state);
-        if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadingListener != null
-                && !isLoadingData && isLoadMoreEnabled) {
+        if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadingListener != null && !isLoadingData && isLoadMoreEnabled) {
             LayoutManager layoutManager = getLayoutManager();
 
             int lastVisibleItemPosition;
@@ -670,9 +659,9 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
                 lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
             }
 
-            if (!isNoMore && layoutManager.getChildCount() > 0 && lastVisibleItemPosition >= layoutManager.getItemCount() - 1
-                    && layoutManager.getItemCount() > layoutManager.getChildCount()
-                    && !isRefreshing) {
+            if (!isNoMore && layoutManager.getChildCount() > 0 && lastVisibleItemPosition >= layoutManager.getItemCount() - 1 && layoutManager.getItemCount()
+                    > layoutManager
+                    .getChildCount() && !isRefreshing) {
                 isLoadingData = true;
                 loadMoreFooter.onLoading();
                 mLoadingListener.onLoadMore();
@@ -732,8 +721,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      * 如果在HeaderView已经被添加到布局中，说明已经到顶部
      */
     private boolean isOnTop() {
-        return refreshHeader.getHeaderView()
-                            .getParent() != null;
+        return refreshHeader.getHeaderView().getParent() != null;
     }
 
     @Override
@@ -773,8 +761,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
 
         /*设置emptyView的监听者*/
         if (mWrapAdapter != null && mWrapAdapter.getAdapter() != null && !hasRegisterEmptyObserver && mEmptyDataObserver != null) {
-            mWrapAdapter.getAdapter()
-                        .registerAdapterDataObserver(mEmptyDataObserver);
+            mWrapAdapter.getAdapter().registerAdapterDataObserver(mEmptyDataObserver);
             hasRegisterEmptyObserver = true;
         }
     }
@@ -785,8 +772,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
         
         /*注销监听者*/
         if (mWrapAdapter != null && mWrapAdapter.getAdapter() != null && hasRegisterEmptyObserver) {
-            mWrapAdapter.getAdapter()
-                        .unregisterAdapterDataObserver(mEmptyDataObserver);
+            mWrapAdapter.getAdapter().unregisterAdapterDataObserver(mEmptyDataObserver);
             hasRegisterEmptyObserver = false;
         }
     }
@@ -833,21 +819,16 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
 
         private void checkEmptyView() {
             if (mEmptyViewContainer != null) {
-                if (mWrapAdapter.getAdapter()
-                                .getItemCount() == 0) {
+                if (mWrapAdapter.getAdapter().getItemCount() == 0) {
                     mEmptyViewContainer.setVisibility(View.VISIBLE);
 
                     //使emptyview居中（除headerview之外）
                     if (mWrapAdapter.getHeaderLayout() != null && mEmptyViewContainer.getLayoutParams() instanceof MarginLayoutParams) {
-                        if (mWrapAdapter.getHeaderLayout()
-                                        .getHeight() == 0 && Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                            mWrapAdapter.getHeaderLayout()
-                                        .measure(0, 0);
-                            ((MarginLayoutParams) mEmptyViewContainer.getLayoutParams()).topMargin = mWrapAdapter.getHeaderLayout()
-                                                                                                                 .getMeasuredHeight();
+                        if (mWrapAdapter.getHeaderLayout().getHeight() == 0 && Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                            mWrapAdapter.getHeaderLayout().measure(0, 0);
+                            ((MarginLayoutParams) mEmptyViewContainer.getLayoutParams()).topMargin = mWrapAdapter.getHeaderLayout().getMeasuredHeight();
                         } else {
-                            ((MarginLayoutParams) mEmptyViewContainer.getLayoutParams()).topMargin = mWrapAdapter.getHeaderLayout()
-                                                                                                                 .getHeight();
+                            ((MarginLayoutParams) mEmptyViewContainer.getLayoutParams()).topMargin = mWrapAdapter.getHeaderLayout().getHeight();
                         }
                     }
                 } else {

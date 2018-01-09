@@ -1,3 +1,12 @@
+/*
+ * *********************************************************
+ *   author   colin
+ *   company  telchina
+ *   email    wanglin2046@126.com
+ *   date     18-1-9 下午3:05
+ * ********************************************************
+ */
+
 package com.zcolin.gui.pullrecyclerview.progressindicator.indicators;
 
 import android.animation.ValueAnimator;
@@ -11,16 +20,16 @@ import java.util.ArrayList;
  */
 public class BallPulseSyncIndicator extends Indicator {
 
-    float[] translateYFloats=new float[3];
+    float[] translateYFloats = new float[3];
 
     @Override
     public void draw(Canvas canvas, Paint paint) {
-        float circleSpacing=4;
-        float radius=(getWidth()-circleSpacing*2)/6;
-        float x = getWidth()/ 2-(radius*2+circleSpacing);
+        float circleSpacing = 4;
+        float radius = (getWidth() - circleSpacing * 2) / 6;
+        float x = getWidth() / 2 - (radius * 2 + circleSpacing);
         for (int i = 0; i < 3; i++) {
             canvas.save();
-            float translateX=x+(radius*2)*i+circleSpacing*i;
+            float translateX = x + (radius * 2) * i + circleSpacing * i;
             canvas.translate(translateX, translateYFloats[i]);
             canvas.drawCircle(0, 0, radius, paint);
             canvas.restore();
@@ -29,22 +38,19 @@ public class BallPulseSyncIndicator extends Indicator {
 
     @Override
     public ArrayList<ValueAnimator> onCreateAnimators() {
-        ArrayList<ValueAnimator> animators=new ArrayList<>();
-        float circleSpacing=4;
-        float radius=(getWidth()-circleSpacing*2)/6;
-        int[] delays=new int[]{70,140,210};
+        ArrayList<ValueAnimator> animators = new ArrayList<>();
+        float circleSpacing = 4;
+        float radius = (getWidth() - circleSpacing * 2) / 6;
+        int[] delays = new int[]{70, 140, 210};
         for (int i = 0; i < 3; i++) {
-            final int index=i;
-            ValueAnimator scaleAnim=ValueAnimator.ofFloat(getHeight()/2,getHeight()/2-radius*2,getHeight()/2);
+            final int index = i;
+            ValueAnimator scaleAnim = ValueAnimator.ofFloat(getHeight() / 2, getHeight() / 2 - radius * 2, getHeight() / 2);
             scaleAnim.setDuration(600);
             scaleAnim.setRepeatCount(-1);
             scaleAnim.setStartDelay(delays[i]);
-            addUpdateListener(scaleAnim,new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    translateYFloats[index] = (float) animation.getAnimatedValue();
-                    postInvalidate();
-                }
+            addUpdateListener(scaleAnim, animation -> {
+                translateYFloats[index] = (float) animation.getAnimatedValue();
+                postInvalidate();
             });
             animators.add(scaleAnim);
         }

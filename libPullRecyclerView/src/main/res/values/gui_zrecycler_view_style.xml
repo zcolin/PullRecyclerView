@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ **********************************************************
+  ~   author   colin
+  ~   company  telchina
+  ~   email    wanglin2046@126.com
+  ~   date     18-1-9 下午2:59
+  ~ *********************************************************
+  -->
+
 <resources>
+
     <style name="AVLoadingIndicatorView">
         <item name="minWidth">30dip</item>
         <item name="maxWidth">30dip</item>
