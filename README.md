@@ -1,7 +1,7 @@
 PullRecyclerViewLib
 =
 ### RecyclerView的下拉刷新到底加载的库，基于[SuperRecycleView](https://github.com/supercwn/SuperRecycleView)修改，<br>加载效果使用[AVLoadingIndicatorView](https://github.com/81813780/AVLoadingIndicatorView),特此感谢。
-#### 但就我个人而言，更喜欢谷歌的下拉小圆圈，所以我一般使用[ZRecyclerView](https://github.com/zcolin/ZRecyclerView)。
+#### 但就我个人而言，更喜欢谷歌的下拉小圆圈，所以我一般使用[ZRecyclerView](https://github.com/zcolin/ZRecyclerView)。ZRecyclerView的接口和PullRecyclerView的接口基本完全一样，可以无缝切换。
   
   
   
@@ -29,11 +29,11 @@ dependencies {
 工程的build.gradle中添加
 ```
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
 	}
+}
 ```
 
 usage
