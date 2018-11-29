@@ -37,6 +37,15 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRe
     public abstract int getItemLayoutId(int viewType);
 
     /**
+     * 获取布局ID
+     *
+     * @return 布局Id,  ex:R.layout.listitem_***
+     */
+    public View getItemLayout(ViewGroup parent, int viewType) {
+        return LayoutInflater.from(parent.getContext()).inflate(getItemLayoutId(viewType), parent, false);
+    }
+
+    /**
      * 客户自己定义的GridLayoutManager的item需要跨的行数
      *
      * @return GridLayoutManager 0为占满，其他为占的具体行数,最多为占满
@@ -128,7 +137,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRe
 
     @Override
     public CommonHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(getItemLayoutId(viewType), parent, false);
+        View v = getItemLayout(parent, viewType);
         return new CommonHolder((RecyclerView) parent, v);
     }
 

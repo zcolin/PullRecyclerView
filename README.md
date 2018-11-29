@@ -23,7 +23,10 @@ Demo
 app的build.gradle中添加
 ```
 dependencies {
-    compile 'com.github.zcolin:PullRecyclerView:latest.release'
+    implementation "com.android.support:appcompat-v7:你的依赖版本号"
+    implementation "com.android.support:design:你的依赖版本号"
+    implementation "com.android.support:recyclerview-v7:你的依赖版本号"
+    implementation 'com.github.zcolin:PullRecyclerView:latest.release'
 }
 ```
 工程的build.gradle中添加
