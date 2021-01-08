@@ -15,6 +15,7 @@ import android.view.View;
  * 加载更多FooterView需要实现的接口
  */
 public interface ILoadMoreFooter {
+
     /**
      * 状态回调，回复初始设置
      */

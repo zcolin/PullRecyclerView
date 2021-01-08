@@ -15,7 +15,7 @@ import android.view.View;
 
 public class CommonHolder extends RecyclerView.ViewHolder {
     public SparseArray<View> spHolder = new SparseArray<>();
-    public RecyclerView viewParent;
+    public RecyclerView      viewParent;
 
     public CommonHolder(RecyclerView viewParent, View itemView) {
         super(itemView);

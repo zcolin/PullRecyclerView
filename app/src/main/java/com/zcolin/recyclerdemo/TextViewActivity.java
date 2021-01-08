@@ -23,13 +23,13 @@ public class TextViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_textview);
 
-
         final PullScrollView refreshLayout = findViewById(R.id.refresh_layout);
         // refreshLayout.setIsRefreshEnabled(false);
         // refreshLayout.setRefreshHeader(new DefRefreshHeader(this));
         // refreshLayout.getRefreshHeaderView().setBackgroundColor(Color.BLUE);
         refreshLayout.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
-        refreshLayout.setRefreshListener(() -> new Handler().postDelayed(() -> refreshLayout.setRefreshCompleted(), 1000));
+        refreshLayout.setRefreshListener(() -> new Handler().postDelayed(() -> refreshLayout.setRefreshCompleted(),
+                                                                         1000));
 
         refreshLayout.refreshWithPull();
     }

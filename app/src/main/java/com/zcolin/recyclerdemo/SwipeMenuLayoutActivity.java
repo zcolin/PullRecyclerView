@@ -28,7 +28,7 @@ public class SwipeMenuLayoutActivity extends AppCompatActivity {
 
     private PullSwipeMenuRecyclerView recyclerView;
     private SwipeMenuRecyclerAdapter  recyclerAdapter;
-    private int mPage = 1;
+    private int                       mPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +39,10 @@ public class SwipeMenuLayoutActivity extends AppCompatActivity {
         recyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
         recyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayout.HORIZONTAL, 1, Color.GREEN));
         recyclerView.getLoadMoreFooterView().setBackgroundColor(Color.BLUE);
-        recyclerView.setOnItemClickListener((BaseRecyclerAdapter.OnItemClickListener<String>) (covertView, position, data) -> Toast.makeText
-                (SwipeMenuLayoutActivity.this, data, Toast.LENGTH_SHORT)
-                                                                                                                                   .show());
+        recyclerView.setOnItemClickListener((BaseRecyclerAdapter.OnItemClickListener<String>) (covertView, position,
+                data) -> Toast
+                .makeText(SwipeMenuLayoutActivity.this, data, Toast.LENGTH_SHORT)
+                .show());
 
         recyclerView.refreshWithPull();
     }

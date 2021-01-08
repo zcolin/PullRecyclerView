@@ -37,8 +37,10 @@ public class SwipeMenuRecyclerAdapter extends BaseRecyclerAdapter<String> {
 
         tvName.setText(String.format("第%d条数据", position));
 
-        tvOpen.setOnClickListener(v -> Toast.makeText(superSwipeMenuLayout.getContext(), "Open", Toast.LENGTH_SHORT).show());
-        tvDel.setOnClickListener(v -> Toast.makeText(superSwipeMenuLayout.getContext(), "Delete", Toast.LENGTH_SHORT).show());
+        tvOpen.setOnClickListener(v -> Toast.makeText(superSwipeMenuLayout.getContext(), "Open", Toast.LENGTH_SHORT)
+                                            .show());
+        tvDel.setOnClickListener(v -> Toast.makeText(superSwipeMenuLayout.getContext(), "Delete", Toast.LENGTH_SHORT)
+                                           .show());
 
         iv.setOnClickListener(v -> {
             if (superSwipeMenuLayout.isOpen()) {

@@ -24,7 +24,7 @@ public class MultiTypeLayoutActivity extends AppCompatActivity {
 
     private PullRecyclerView recyclerView;
     private MultiTypeAdapter recyclerAdapter;
-    private int mPage = 1;
+    private int              mPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +37,10 @@ public class MultiTypeLayoutActivity extends AppCompatActivity {
         recyclerView.setEmptyView(this, R.layout.view_recycler_empty);
         recyclerView.addHeaderView(this, R.layout.view_recyclerheader);
 
-        recyclerView.setOnItemClickListener((BaseRecyclerAdapter.OnItemClickListener<String>) (covertView, position, data) -> Toast.makeText
-                (MultiTypeLayoutActivity.this, data, Toast.LENGTH_SHORT)
-                                                                                                                                   .show());
+        recyclerView.setOnItemClickListener((BaseRecyclerAdapter.OnItemClickListener<String>) (covertView, position,
+                data) -> Toast
+                .makeText(MultiTypeLayoutActivity.this, data, Toast.LENGTH_SHORT)
+                .show());
 
         notifyData(new ArrayList<>(), false);
         recyclerView.refreshWithPull();

@@ -32,11 +32,11 @@ public class PullScrollView extends ScrollView {
     private RefreshListener mRefreshListener;
 
     private IRefreshHeader refreshHeader;
-    private boolean isRefreshEnabled = true;    //设置下拉刷新是否可用
-    private float   dragRate         = 2;       //下拉刷新滑动阻力系数，越大需要手指下拉的距离越大才能刷新
+    private boolean        isRefreshEnabled = true;    //设置下拉刷新是否可用
+    private float          dragRate         = 2;       //下拉刷新滑动阻力系数，越大需要手指下拉的距离越大才能刷新
 
     private boolean isRefreshing;   //是否正在刷新
-    private float mLastY = -1;      //上次触摸的的Y值
+    private float   mLastY = -1;      //上次触摸的的Y值
     private int     topY;
     private float   sumOffSet;
     private boolean isAdded;
@@ -72,9 +72,12 @@ public class PullScrollView extends ScrollView {
             int index = group.indexOfChild(this);
             group.removeView(this);
             group.addView(container, index, getLayoutParams());
-            container.addView(refreshHeader.getHeaderView(), new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams
-                    .WRAP_CONTENT));
-            container.addView(this, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            container.addView(refreshHeader.getHeaderView(),
+                              new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                            ViewGroup.LayoutParams.WRAP_CONTENT));
+            container.addView(this,
+                              new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                            ViewGroup.LayoutParams.MATCH_PARENT));
         }
     }
 

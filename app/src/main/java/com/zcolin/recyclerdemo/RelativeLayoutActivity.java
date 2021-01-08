@@ -28,7 +28,8 @@ public class RelativeLayoutActivity extends AppCompatActivity {
         // refreshLayout.setRefreshHeader(new DefRefreshHeader(this));          //设置默认或者自定义的刷新Header
         // refreshLayout.getRefreshHeaderView().setBackgroundColor(Color.BLUE);//加载Header的背景颜色
         refreshLayout.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
-        refreshLayout.setRefreshListener(() -> new Handler().postDelayed(() -> refreshLayout.setRefreshCompleted(), 1000));
+        refreshLayout.setRefreshListener(() -> new Handler().postDelayed(() -> refreshLayout.setRefreshCompleted(),
+                                                                         1000));
 
         refreshLayout.refreshWithPull();
     }

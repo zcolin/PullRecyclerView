@@ -25,7 +25,6 @@ public class RecyclerAdapter extends BaseRecyclerAdapter<String> {
     public RecyclerAdapter() {
     }
 
-
     public RecyclerAdapter(int showType) {
         this.showType = showType;
     }

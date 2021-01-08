@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private PullRecyclerView recyclerView;
     private RecyclerAdapter  recyclerAdapter;
     private View             headerView2;
-    private int mPage = 1;
+    private int              mPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
         recyclerView.setLoadMoreProgressStyle(ProgressStyle.LineScaleIndicator);
 
-        recyclerView.setOnItemClickListener((BaseRecyclerAdapter.OnItemClickListener<String>) (covertView, position, data) -> {
+        recyclerView.setOnItemClickListener((BaseRecyclerAdapter.OnItemClickListener<String>) (covertView, position,
+                data) -> {
             Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
             if (position == 0) {
                 Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
@@ -89,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.removeHeaderView(headerView2);
             }
         });
-        recyclerView.setOnItemLongClickListener((BaseRecyclerAdapter.OnItemLongClickListener<String>) (covertView, position, data) -> {
+        recyclerView.setOnItemLongClickListener((BaseRecyclerAdapter.OnItemLongClickListener<String>) (covertView,
+                position, data) -> {
             recyclerAdapter.getDatas().remove(position);
             recyclerAdapter.notifyItemRemoved(position);
             recyclerAdapter.notifyItemRangeChanged(position, recyclerAdapter.getDatas().size() - position);

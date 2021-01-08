@@ -15,6 +15,7 @@ import android.view.View;
  * 下拉HeadrView需要实现的接口
  */
 public interface IRefreshHeader {
+
     /**
      * 手势状态
      */

@@ -25,7 +25,7 @@ public class StaggeredGridLayoutActivity extends AppCompatActivity {
 
     private PullRecyclerView recyclerView;
     private RecyclerAdapter  recyclerAdapter;
-    private int mPage = 1;
+    private int              mPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +48,10 @@ public class StaggeredGridLayoutActivity extends AppCompatActivity {
         recyclerView.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
         recyclerView.setLoadMoreProgressStyle(ProgressStyle.LineScaleIndicator);
 
-        recyclerView.setOnItemClickListener((BaseRecyclerAdapter.OnItemClickListener<String>) (covertView, position, data) -> Toast.makeText
-                (StaggeredGridLayoutActivity.this, data, Toast.LENGTH_SHORT)
-                                                                                                                                   .show());
+        recyclerView.setOnItemClickListener((BaseRecyclerAdapter.OnItemClickListener<String>) (covertView, position,
+                data) -> Toast
+                .makeText(StaggeredGridLayoutActivity.this, data, Toast.LENGTH_SHORT)
+                .show());
 
         // recyclerView.setIsShowNoMore(false);      //不显示已加载全部
         // recyclerView.setIsLoadMoreEnabled(false);//到底加载是否可用

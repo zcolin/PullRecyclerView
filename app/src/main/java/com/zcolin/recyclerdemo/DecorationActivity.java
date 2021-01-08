@@ -22,7 +22,7 @@ public class DecorationActivity extends AppCompatActivity {
 
     private PullRecyclerView recyclerView;
     private RecyclerAdapter  recyclerAdapter;
-    private int mPage = 1;
+    private int              mPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

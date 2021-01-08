@@ -46,29 +46,29 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     private PullRecyclerView.PullLoadMoreListener mLoadingListener;
     private RelativeLayout                        mEmptyViewContainer;
 
-    private ArrayList<View> listHeaderView;
-    private ArrayList<View> listFooterView;
-    private IRefreshHeader  refreshHeader;
-    private ILoadMoreFooter loadMoreFooter;
-    private boolean isShowNoMore      = true;   //是否显示 加载全部
-    private boolean isRefreshEnabled  = true;    //设置下拉刷新是否可用
-    private boolean isLoadMoreEnabled = true;    //设置到底加载是否可用
-    private float   dragRate          = 2;//下拉刷新滑动阻力系数，越大需要手指下拉的距离越大才能刷新
+    private ArrayList<View>                             listHeaderView;
+    private ArrayList<View>                             listFooterView;
+    private IRefreshHeader                              refreshHeader;
+    private ILoadMoreFooter                             loadMoreFooter;
+    private boolean                                     isShowNoMore         = true;   //是否显示 加载全部
+    private boolean                                     isRefreshEnabled     = true;    //设置下拉刷新是否可用
+    private boolean                                     isLoadMoreEnabled    = true;    //设置到底加载是否可用
+    private float                                       dragRate             = 2;//下拉刷新滑动阻力系数，越大需要手指下拉的距离越大才能刷新
     private BaseRecyclerAdapter.OnItemClickListener     itemClickListener;
     private BaseRecyclerAdapter.OnItemLongClickListener itemLongClickListener;
-    private long minClickIntervaltime = 100; //ITEM点击的最小间隔
+    private long                                        minClickIntervaltime = 100; //ITEM点击的最小间隔
 
     private boolean isAddHeader;//如果在设置adapter之前设置,此变量为false,之后设置,则为true
     private boolean isAddFooter;//如果在设置adapter之前设置,此变量为false,之后设置,则为true
     private boolean isNoMore      = false;   //是否已没有更多
     private boolean isLoadingData = false;   //是否正在加载数据
     private boolean isRefreshing;//是否正在刷新
-    private float mLastY = -1;      //上次触摸的的Y值
-    private float sumOffSet;
+    private float   mLastY        = -1;      //上次触摸的的Y值
+    private float   sumOffSet;
 
     private final AdapterDataObserver             mEmptyDataObserver = new DataObserver();
     private       AppBarStateChangeListener.State appbarState        = AppBarStateChangeListener.State.EXPANDED;
-    private boolean hasRegisterEmptyObserver;
+    private       boolean                         hasRegisterEmptyObserver;
 
     public PullRecyclerView(Context context) {
         this(context, null);
@@ -103,7 +103,8 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     }
 
     /**
-     * 此处设置OnItemClickListener是调用的{@link BaseRecyclerAdapter#setOnItemClickListener(BaseRecyclerAdapter.OnItemClickListener)}，
+     * 此处设置OnItemClickListener
+     * 是调用的{@link BaseRecyclerAdapter#setOnItemClickListener(BaseRecyclerAdapter.OnItemClickListener)}，
      * 此处的泛型类型必须和{@link BaseRecyclerAdapter}的相同
      */
     public <T> void setOnItemClickListener(BaseRecyclerAdapter.OnItemClickListener<T> li) {
@@ -118,7 +119,8 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     }
 
     /**
-     * 此处设置OnItemLongClickListener是调用的{@link BaseRecyclerAdapter#setOnItemLongClickListener(BaseRecyclerAdapter.OnItemLongClickListener)}，
+     * 此处设置OnItemLongClickListener
+     * 是调用的{@link BaseRecyclerAdapter#setOnItemLongClickListener(BaseRecyclerAdapter.OnItemLongClickListener)}，
      * 此处的泛型类型必须和{@link BaseRecyclerAdapter}的相同
      */
     public <T> void setOnItemLongClickListener(BaseRecyclerAdapter.OnItemLongClickListener<T> li) {
@@ -182,7 +184,8 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
      */
     public void setStaggeredGridLayout(boolean isForce, int spanCount) {
         if (isForce || getLayoutManager() == null || !(getLayoutManager() instanceof StaggeredGridLayoutManager)) {
-            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(spanCount, LinearLayoutManager.VERTICAL);
+            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(spanCount,
+                                                                                                   LinearLayoutManager.VERTICAL);
             setLayoutManager(staggeredGridLayoutManager);
         }
     }
@@ -477,20 +480,28 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
         RelativeLayout container = new RelativeLayout(getContext());
         if (group == null) {
             group = new RelativeLayout(getContext());
-            group.addView(container, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            group.addView(container,
+                          new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                          ViewGroup.LayoutParams.MATCH_PARENT));
         } else {
             int index = group.indexOfChild(this);
             group.removeView(this);
             group.addView(container, index, getLayoutParams());
         }
 
-        container.addView(this, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        container.addView(this,
+                          new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                          ViewGroup.LayoutParams.MATCH_PARENT));
 
-        RelativeLayout.LayoutParams emptyViewParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams emptyViewParams =
+                new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                                                                      ViewGroup.LayoutParams.WRAP_CONTENT);
         emptyViewParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         mEmptyViewContainer = new RelativeLayout(getContext());
         mEmptyViewContainer.addView(emptyView, emptyViewParams);
-        container.addView(mEmptyViewContainer, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        container.addView(mEmptyViewContainer,
+                          new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                          ViewGroup.LayoutParams.MATCH_PARENT));
 
         this.mEmptyViewContainer.setVisibility(View.GONE);
         return group;
@@ -622,7 +633,10 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
         }
 
         mWrapAdapter = new WrapperRecyclerAdapter(adapter);
-        mWrapAdapter.setRefreshHeader(refreshHeader).setLoadMoreFooter(loadMoreFooter).setIsShowNoMore(isShowNoMore).setIsLoadMoreEnabled(isLoadMoreEnabled);
+        mWrapAdapter.setRefreshHeader(refreshHeader)
+                    .setLoadMoreFooter(loadMoreFooter)
+                    .setIsShowNoMore(isShowNoMore)
+                    .setIsLoadMoreEnabled(isLoadMoreEnabled);
 
         if (!isAddHeader) {
             mWrapAdapter.setHeaderViews(listHeaderView);
@@ -659,9 +673,8 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
                 lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
             }
 
-            if (!isNoMore && layoutManager.getChildCount() > 0 && lastVisibleItemPosition >= layoutManager.getItemCount() - 1 && layoutManager.getItemCount()
-                    > layoutManager
-                    .getChildCount() && !isRefreshing) {
+            if (!isNoMore && layoutManager.getChildCount() > 0 && lastVisibleItemPosition >= layoutManager.getItemCount() - 1 && layoutManager
+                    .getItemCount() > layoutManager.getChildCount() && !isRefreshing) {
                 isLoadingData = true;
                 loadMoreFooter.onLoading();
                 mLoadingListener.onLoadMore();
@@ -769,7 +782,7 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        
+
         /*注销监听者*/
         if (mWrapAdapter != null && mWrapAdapter.getAdapter() != null && hasRegisterEmptyObserver) {
             mWrapAdapter.getAdapter().unregisterAdapterDataObserver(mEmptyDataObserver);
@@ -789,12 +802,16 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
 
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeInserted(mWrapAdapter.getHeaderLayout() == null ? positionStart + 1 : positionStart + 2, itemCount);
+            mWrapAdapter.notifyItemRangeInserted(mWrapAdapter.getHeaderLayout() == null ?
+                                                 positionStart + 1 :
+                                                 positionStart + 2, itemCount);
         }
 
         @Override
         public void onItemRangeRemoved(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeRemoved(mWrapAdapter.getHeaderLayout() == null ? positionStart + 1 : positionStart + 2, itemCount);
+            mWrapAdapter.notifyItemRangeRemoved(mWrapAdapter.getHeaderLayout() == null ?
+                                                positionStart + 1 :
+                                                positionStart + 2, itemCount);
             checkEmptyView();
         }
 
@@ -807,13 +824,17 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
 
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeChanged(mWrapAdapter.getHeaderLayout() == null ? positionStart + 1 : positionStart + 2, itemCount);
+            mWrapAdapter.notifyItemRangeChanged(mWrapAdapter.getHeaderLayout() == null ?
+                                                positionStart + 1 :
+                                                positionStart + 2, itemCount);
             checkEmptyView();
         }
 
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-            mWrapAdapter.notifyItemRangeChanged(mWrapAdapter.getHeaderLayout() == null ? positionStart + 1 : positionStart + 2, itemCount, payload);
+            mWrapAdapter.notifyItemRangeChanged(mWrapAdapter.getHeaderLayout() == null ?
+                                                positionStart + 1 :
+                                                positionStart + 2, itemCount, payload);
             checkEmptyView();
         }
 
@@ -824,11 +845,16 @@ public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
 
                     //使emptyview居中（除headerview之外）
                     if (mWrapAdapter.getHeaderLayout() != null && mEmptyViewContainer.getLayoutParams() instanceof MarginLayoutParams) {
-                        if (mWrapAdapter.getHeaderLayout().getHeight() == 0 && Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        if (mWrapAdapter.getHeaderLayout()
+                                        .getHeight() == 0 && Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1) {
                             mWrapAdapter.getHeaderLayout().measure(0, 0);
-                            ((MarginLayoutParams) mEmptyViewContainer.getLayoutParams()).topMargin = mWrapAdapter.getHeaderLayout().getMeasuredHeight();
+                            ((MarginLayoutParams) mEmptyViewContainer.getLayoutParams()).topMargin =
+                                    mWrapAdapter.getHeaderLayout()
+                                                                                                                 .getMeasuredHeight();
                         } else {
-                            ((MarginLayoutParams) mEmptyViewContainer.getLayoutParams()).topMargin = mWrapAdapter.getHeaderLayout().getHeight();
+                            ((MarginLayoutParams) mEmptyViewContainer.getLayoutParams()).topMargin =
+                                    mWrapAdapter.getHeaderLayout()
+                                                                                                                 .getHeight();
                         }
                     }
                 } else {

@@ -23,11 +23,11 @@ import java.util.List;
  */
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerAdapter.CommonHolder> {
 
-    private ArrayList<T> listData = new ArrayList<>();
+    private ArrayList<T>               listData             = new ArrayList<>();
     private OnItemClickListener<T>     itemClickListener;
     private OnItemLongClickListener<T> itemLongClickListener;
-    private long minClickIntervaltime = 100; //ITEM点击的最小间隔
-    private long mLastClickTime;//上次点击时间
+    private long                       minClickIntervaltime = 100; //ITEM点击的最小间隔
+    private long                       mLastClickTime;//上次点击时间
 
     /**
      * 获取布局ID
@@ -192,7 +192,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRe
 
     public static class CommonHolder extends RecyclerView.ViewHolder {
         public SparseArray<View> spHolder = new SparseArray<>();
-        public RecyclerView viewParent;
+        public RecyclerView      viewParent;
 
         public CommonHolder(RecyclerView viewParent, View itemView) {
             super(itemView);

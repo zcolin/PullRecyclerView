@@ -31,13 +31,13 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public static final  int TYPE_HEADER          = 100003;
     public static final  int TYPE_FOOTER          = 100004;
 
-    private LinearLayout mHeaderLayout;
-    private LinearLayout mFooterLayout;
-    private LinearLayout mCopyHeaderLayout = null;
-    private LinearLayout mCopyFooterLayout = null;
+    private LinearLayout    mHeaderLayout;
+    private LinearLayout    mFooterLayout;
+    private LinearLayout    mCopyHeaderLayout = null;
+    private LinearLayout    mCopyFooterLayout = null;
     private IRefreshHeader  refreshHeader;
     private ILoadMoreFooter loadMoreFooter;
-    private boolean isLoadMoreEnabled = true;//设置到底加载是否可用
+    private boolean         isLoadMoreEnabled = true;//设置到底加载是否可用
 
     private RecyclerView.Adapter<RecyclerView.ViewHolder> adapter;
 
@@ -87,7 +87,8 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             if (mCopyHeaderLayout == null) {
                 mHeaderLayout = new LinearLayout(header.getContext());
                 mHeaderLayout.setOrientation(LinearLayout.VERTICAL);
-                mHeaderLayout.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+                mHeaderLayout.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
+                                                                            RecyclerView.LayoutParams.WRAP_CONTENT));
                 mCopyHeaderLayout = mHeaderLayout;
             } else {
                 mHeaderLayout = mCopyHeaderLayout;
@@ -126,7 +127,8 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             if (mCopyFooterLayout == null) {
                 mFooterLayout = new LinearLayout(footer.getContext());
                 mFooterLayout.setOrientation(LinearLayout.VERTICAL);
-                mFooterLayout.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+                mFooterLayout.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
+                                                                            RecyclerView.LayoutParams.WRAP_CONTENT));
                 mCopyFooterLayout = mFooterLayout;
             } else {
                 mFooterLayout = mCopyFooterLayout;
@@ -138,8 +140,9 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public void removeHeaderView(View header) {
-        if (mHeaderLayout == null)
+        if (mHeaderLayout == null) {
             return;
+        }
 
         mHeaderLayout.removeView(header);
         if (mHeaderLayout.getChildCount() == 0) {
@@ -149,8 +152,9 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public void removeFooterView(View footer) {
-        if (mFooterLayout == null)
+        if (mFooterLayout == null) {
             return;
+        }
 
         mFooterLayout.removeView(footer);
         if (mFooterLayout.getChildCount() == 0) {
@@ -160,8 +164,9 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public void removeAllHeaderView() {
-        if (mHeaderLayout == null)
+        if (mHeaderLayout == null) {
             return;
+        }
 
         mHeaderLayout.removeAllViews();
         mHeaderLayout = null;
@@ -169,8 +174,9 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public void removeAllFooterView() {
-        if (mFooterLayout == null)
+        if (mFooterLayout == null) {
             return;
+        }
 
         mFooterLayout.removeAllViews();
         mFooterLayout = null;
@@ -295,7 +301,8 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         int realPosition = getRealPosition(position);
         if (realPosition >= 0 && realPosition < adapter.getItemCount()) {
             if (isReservedItemType(adapter.getItemViewType(realPosition))) {
-                throw new IllegalStateException("PullRecyclerView require itemViewType in adapter should be less than 10000 ");
+                throw new IllegalStateException(
+                        "PullRecyclerView require itemViewType in adapter should be less than 10000 ");
             }
 
             return adapter.getItemViewType(realPosition);
@@ -320,15 +327,15 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
-        if (isReservedItemType(getItemViewType(position)))
+        if (isReservedItemType(getItemViewType(position))) {
             return;
+        }
 
         int realPosition = getRealPosition(position);
         if (realPosition >= 0 && realPosition < adapter.getItemCount()) {
             adapter.onBindViewHolder(viewHolder, realPosition);
         }
     }
-
 
     public boolean isLoadMoreFooter(int position) {
         return isLoadMoreEnabled && position == getItemCount() - 1;
@@ -368,7 +375,8 @@ class WrapperRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     if (isReservedItemType(getItemViewType(position))) {
                         return fullCount;
                     } else if (adapter instanceof BaseRecyclerAdapter) {
-                        int count = ((BaseRecyclerAdapter) adapter).getGridItemSpanCount(getRealPosition(position), getItemViewType(position));
+                        int count = ((BaseRecyclerAdapter) adapter).getGridItemSpanCount(getRealPosition(position),
+                                                                                         getItemViewType(position));
                         count = (count == 0 || count > fullCount) ? fullCount : count;
                         return count;
                     }

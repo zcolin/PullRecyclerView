@@ -71,7 +71,8 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
         this.setLayoutParams(lp);
         this.setPadding(0, 0, 0, 0);
 
-        mContainer = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.gui_pullrecyclerview_header, null);
+        mContainer = (LinearLayout) LayoutInflater.from(getContext())
+                                                  .inflate(R.layout.gui_pullrecyclerview_header, null);
         addView(mContainer, new LayoutParams(LayoutParams.MATCH_PARENT, 0));
         setGravity(Gravity.BOTTOM);
 
@@ -81,11 +82,21 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
         mProgressBar = findViewById(R.id.listview_header_progressbar);
         setProgressStyle(ProgressStyle.BallSpinFadeLoaderIndicator);
 
-        mRotateUpAnim = new RotateAnimation(0.0f, -180.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        mRotateUpAnim = new RotateAnimation(0.0f,
+                                            -180.0f,
+                                            Animation.RELATIVE_TO_SELF,
+                                            0.5f,
+                                            Animation.RELATIVE_TO_SELF,
+                                            0.5f);
         mRotateUpAnim.setDuration(ROTATE_ANIM_DURATION);
         mRotateUpAnim.setFillAfter(true);
 
-        mRotateDownAnim = new RotateAnimation(-180.0f, 0.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        mRotateDownAnim = new RotateAnimation(-180.0f,
+                                              0.0f,
+                                              Animation.RELATIVE_TO_SELF,
+                                              0.5f,
+                                              Animation.RELATIVE_TO_SELF,
+                                              0.5f);
         mRotateDownAnim.setDuration(ROTATE_ANIM_DURATION);
         mRotateDownAnim.setFillAfter(true);
 
@@ -210,7 +221,8 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
         mArrowImageView.setVisibility(View.INVISIBLE);
         mProgressBar.setVisibility(View.INVISIBLE);
 
-        SharedPreferences pre = getContext().getApplicationContext().getSharedPreferences("pullrecyclerview", Context.MODE_PRIVATE);
+        SharedPreferences pre = getContext().getApplicationContext()
+                                            .getSharedPreferences("pullrecyclerview", Context.MODE_PRIVATE);
         mHeaderTimeView.setText(friendlyTime(pre.getLong("refresh_time", 0)));
         new Handler().postDelayed(() -> reset(), 200);
         mStatusTextView.setText(strInfo4);
@@ -244,8 +256,9 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
      * 设置下拉Header需要显示的高度
      */
     private void setVisibleHeight(int height) {
-        if (height < 0)
+        if (height < 0) {
             height = 0;
+        }
         LayoutParams lp = (LayoutParams) mContainer.getLayoutParams();
         lp.height = height;
         mContainer.setLayoutParams(lp);
@@ -275,8 +288,9 @@ public class DefRefreshHeader extends LinearLayout implements IRefreshHeader {
         if (ct >= 60 && ct < 3600) {
             return Math.max(ct / 60, 1) + "分钟前";
         }
-        if (ct >= 3600 && ct < 86400)
+        if (ct >= 3600 && ct < 86400) {
             return ct / 3600 + "小时前";
+        }
         if (ct >= 86400 && ct < 2592000) { //86400 * 30
             int day = ct / 86400;
             return day + "天前";

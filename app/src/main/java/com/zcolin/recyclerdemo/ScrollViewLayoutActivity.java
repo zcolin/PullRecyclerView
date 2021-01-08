@@ -23,13 +23,13 @@ public class ScrollViewLayoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrollview);
 
-
         final PullScrollView refreshLayout = findViewById(R.id.refresh_layout);
         // refreshLayout.setIsRefreshEnabled(false);                            //下拉刷新是否可用
         // refreshLayout.setRefreshHeader(new DefRefreshHeader(this));          //设置默认或者自定义的刷新Header
         // refreshLayout.getRefreshHeaderView().setBackgroundColor(Color.BLUE);//加载Header的背景颜色
         refreshLayout.setRefreshProgressStyle(ProgressStyle.LineScaleIndicator);
-        refreshLayout.setRefreshListener(() -> new Handler().postDelayed(() -> refreshLayout.setRefreshCompleted(), 1000));
+        refreshLayout.setRefreshListener(() -> new Handler().postDelayed(() -> refreshLayout.setRefreshCompleted(),
+                                                                         1000));
 
         refreshLayout.refreshWithPull();
     }

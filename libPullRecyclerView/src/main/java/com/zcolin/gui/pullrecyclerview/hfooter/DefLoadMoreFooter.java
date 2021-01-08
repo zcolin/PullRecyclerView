@@ -36,8 +36,8 @@ public class DefLoadMoreFooter extends LinearLayout implements ILoadMoreFooter {
 
     private SimpleViewSwitcher mProgressBar;
     private TextView           mText;
-    private boolean isShowNoMore = true;
-    private int mMeasuredHeight;
+    private boolean            isShowNoMore = true;
+    private int                mMeasuredHeight;
 
     public DefLoadMoreFooter(Context context) {
         this(context, null);
@@ -51,12 +51,14 @@ public class DefLoadMoreFooter extends LinearLayout implements ILoadMoreFooter {
     public void initView() {
         setGravity(Gravity.CENTER);
         setPadding(0, 25, 0, 25);
-        setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                      ViewGroup.LayoutParams.WRAP_CONTENT));
         setProgressStyle(ProgressStyle.BallSpinFadeLoaderIndicator);
 
         mText = new TextView(getContext());
         mText.setText(STR_LOADING);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                                                               ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(20, 0, 0, 0);
         addView(mText, layoutParams);
 
@@ -70,7 +72,8 @@ public class DefLoadMoreFooter extends LinearLayout implements ILoadMoreFooter {
     public void setProgressStyle(String style) {
         if (mProgressBar == null) {
             mProgressBar = new SimpleViewSwitcher(getContext());
-            mProgressBar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            mProgressBar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                                                    ViewGroup.LayoutParams.WRAP_CONTENT));
             addView(mProgressBar);
         }
 
