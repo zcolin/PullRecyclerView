@@ -23,9 +23,10 @@ Demo
 app的build.gradle中添加
 ```
 dependencies {
-    implementation "com.android.support:appcompat-v7:你的依赖版本号"
-    implementation "com.android.support:design:你的依赖版本号"
-    implementation "com.android.support:recyclerview-v7:你的依赖版本号"
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.github.zcolin:PullRecyclerView:latest.release'
 }
 ```
