@@ -11,7 +11,7 @@ package com.zcolin.recyclerdemo;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.zcolin.gui.pullrecyclerview.PullScrollView;
 import com.zcolin.gui.pullrecyclerview.progressindicator.ProgressStyle;

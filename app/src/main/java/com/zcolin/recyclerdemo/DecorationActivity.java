@@ -11,12 +11,13 @@ package com.zcolin.recyclerdemo;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 
 import com.zcolin.gui.pullrecyclerview.PullRecyclerView;
 import com.zcolin.recyclerdemo.adapter.RecyclerAdapter;
 
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class DecorationActivity extends AppCompatActivity {
 

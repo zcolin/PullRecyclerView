@@ -11,12 +11,12 @@ package com.zcolin.gui.pullrecyclerview;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import com.google.android.material.appbar.AppBarLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -38,10 +38,10 @@ import java.util.List;
 /**
  * 下拉刷新_到底加载 组件
  * <p>
- * 可以传入{@link android.support.v7.widget.RecyclerView.Adapter}及其子类，使用装饰者模式将用户传入的apapter进行包装，
+ * 可以传入{@link RecyclerView.Adapter}及其子类，使用装饰者模式将用户传入的apapter进行包装，
  * 所以用户的adapter可以保持原有样式的操作
  */
-public class PullRecyclerView extends android.support.v7.widget.RecyclerView {
+public class PullRecyclerView extends RecyclerView {
     private WrapperRecyclerAdapter                mWrapAdapter;
     private PullRecyclerView.PullLoadMoreListener mLoadingListener;
     private RelativeLayout                        mEmptyViewContainer;
